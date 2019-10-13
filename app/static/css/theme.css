@@ -1,3 +1,5 @@
-.primary {
-	color: 	#008080;
+body{
+	background-image: url('../img/bg.jpg');
+	background-repeat: no-repeat;
+	background-size: 100%;
 }

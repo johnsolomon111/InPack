@@ -16,8 +16,9 @@ def signup():
 	form = RegistrationForm()
 	print(form)
 	if form.validate_on_submit():
+		# return 'contact: {} firstname: {} lastname: {} email: {} username: {} password: {} confirm: {} rfid: {}'.format(form.contact.data, form.firstname.data, form.lastname.data, form.email.data, form.username.data, form.password.data, form.confirm.data, form.rfid.data,)
 		return redirect(url_for('dashboard'))
-	return render_template('signup2.html', title="Get Started!", form=form)
+	return render_template('signup.html', title="Get Started!", form=form)
 
 @server.route('/dashboard', methods=["GET", "POST"])
 def dashboard():

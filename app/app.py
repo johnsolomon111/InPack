@@ -2,14 +2,19 @@ from app import *
 
 from flask import render_template, request, redirect, url_for
 
-@server.route('/', methods=["GET"])
+@server.route('/', methods=["GET","POST"])
 def index():
-	print('zzzzzzzzz')
-	return render_template('index.html', title="Inpack")
+	form = LoginForm()
+	if form.validate_on_submit():
+		return 'username: {} rfid: {}'.format(form.username.data, form.rfid.data)
+	return render_template('index.html', title="Inpack", form=form)
 
-@server.route('/login', methods=["GET"])
+@server.route('/login', methods=["GET", "POST"])
 def login_with_password():
-	return render_template('login.html', title="Log In with Password")
+	form = LoginForm()
+	if form.validate_on_submit():
+		return 'username: {} password: {}'.format(form.username.data, form.password.data)
+	return render_template('login.html', title="Log In with Password", form=form)
 
 @server.route('/signup', methods=["GET", "POST"])
 def signup():

@@ -11,3 +11,8 @@ class RegistrationForm(FlaskForm):
 	password = PasswordField('password')
 	confirm = PasswordField('confirm', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
 	rfid = PasswordField('rfid')
+
+class LoginForm(FlaskForm):
+	username = StringField('username')
+	password = PasswordField('password')
+	rfid = PasswordField('rfid')

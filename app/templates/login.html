@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+{% from '_formhelper.html' import render_field %}
 	<div class="row">
 		<div class="col-lg-4"></div>
 
@@ -17,13 +18,17 @@
 							<hr>
 					</div>
 				  <div class="card-body m-0 pt-0">
-				    <form>
+				    <form  method="post" action="{{ url_for('login_with_password') }}">
+				    	{{ form.csrf_token }}
 					  	<div class="form-group">
-					  		<input placeholder="Username" type="text" class="form-control mb-2 border border-primary">
-					  		<input placeholder="Password" type="password" class="form-control mb-2 border border-primary">
+					  		{{ render_field(form.username, placeholder="Username", class="form-control mb-2 border border-primary", required="true") }}
+					  		{{ render_field(form.password, placeholder="Password", class="form-control mb-2 border border-primary", required="true") }}
+					  		<!-- <input placeholder="Username" type="text" class="form-control mb-2 border border-primary">
+					  		<input placeholder="Password" type="password" class="form-control mb-2 border border-primary"> -->
 					  	</div>
 					  	<!-- <input type="submit" name="login" hidden="true"> -->
-				    	<a href="/home" class="btn btn-primary rounded-pill" style="margin-left: 3	0%; width: 40%;">Log In</a>
+				    	<!-- <a href="/home" class="btn btn-primary rounded-pill" style="margin-left: 3	0%; width: 40%;">Log In</a> -->
+				    	<button type="submit" class="btn btn-primary rounded-pill" style="margin-left: 3	0%; width: 40%;">Log In</button>
 					</form>
 				  	<small class="col-4"><a href="#">Forget Password?</a></small>
 				  </div>

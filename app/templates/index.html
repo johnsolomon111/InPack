@@ -21,7 +21,7 @@
 				    <form  method="post" action="{{ url_for('index') }}">
 				    	{{ form.csrf_token }}
 					  	<div class="form-group">
-					  		{{ render_field(form.username, placeholder="Username", class="form-control mb-2 border border-primary", required="true") }}
+					  		{{ render_field(form.username, placeholder="Username", class="form-control mb-2 border border-primary text-center", required="true") }}
 					  		{{ render_field(form.rfid, placeholder="Please tap your ID", class="form-control text-center border-primary mb-2 mt-0", required="true") }}
 					  		<!-- <input placeholder="Username" type="text" class="form-control mb-2 border border-primary">
 					    	<input type="password" class="form-control text-center border-primary mb-2 mt-0" id="rfid" placeholder="Please tap your ID"> -->

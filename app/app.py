@@ -21,7 +21,6 @@ def signup():
 	form = RegistrationForm()
 	if form.validate_on_submit():
 		new_user = User(form.contact.data, form.firstname.data, form.lastname.data, form.email.data, form.username.data, form.password.data, form.rfid.data)
-		print(new_user)
 		dbase.session.add(new_user)
 		dbase.session.commit()
 

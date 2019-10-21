@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block content %}
+{% from '_formhelper.html' import render_field %}
+	<div class="row">
+		<div class="col-lg-3"></div>
+
+		<div class="col-6" style="margin-top: 1%;">
+			<div class="container mt-2">
+				<img src="../static/img/logo.jpg" class="img-thumbnail rounded-circle border-0 shadow mb-3" style="height: 135px; width: 135px; margin-right: 35%; margin-left: 40%;">
+				<div class="card border-0 shadow bg-white">
+					<div class="card-header bg-white border-0 pb-0 mb-0">
+						<h5 class="text-center">Registration</h3>
+							<hr>
+					</div>
+				  <div class="card-body m-0 pt-0">
+				    <form class="form-signin" method="post" action="{{ url_for('signup') }}">
+				    	{{ form.csrf_token }}
+				  		<div class="form-group">
+				  			<div class="row">
+				  				<div class="col">
+							    	<label>Contact Info</label>
+							    	{{ render_field(form.contact, placeholder="Contact Number", class="form-control mb-2 border border-primary", required="true") }}
+							    	{{ render_field(form.firstname, placeholder="First Name", class="form-control mb-2 border border-primary", required="true") }}
+							    	{{ render_field(form.lastname, placeholder="Last Name", class="form-control mb-2 border border-primary", required="true") }}
+							    	{{ render_field(form.email, placeholder="Email", class="form-control mb-2 border border-primary", required="true", type="email") }}
+						    	</div>
+
+						    	<div class="col">
+							  		<label>Log In info</label>
+							  		{{ render_field(form.username, placeholder="Username", class="form-control mb-2 border border-primary", required="true") }}
+							  		{{ render_field(form.password, placeholder="Password", class="form-control mb-2 border border-primary", required="true") }}
+							  		{{ render_field(form.confirm, placeholder="Confirm Password", class="form-control mb-2 border border-primary", required="true") }}
+							  		{{ render_field(form.rfid, placeholder="Please tap your ID to Sign Up", class="form-control text-center border-0 mb-2 mt-0", required="true") }}
+							    	<input type="submit" name="login-info" hidden="true">
+						    	</div>
+					    	</div>
+					    	<br>
+					    	<div class="text-center">
+					    		<small>Already have a account? <a href="/">Log In</a></small>
+					    	</div>
+				    	</div>		
+					</form>
+				  </div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-3">
+			
+		</div>
+	</div>
+{% endblock %}

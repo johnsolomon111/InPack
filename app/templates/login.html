@@ -14,23 +14,24 @@
 				<img src="../static/img/logo.jpg" class="img-thumbnail rounded-circle border-0 shadow mb-3" style="height: 135px; width: 135px; margin-right: 35%; margin-left: 35%;">
 				<div class="card border-0 shadow bg-white">
 					<div class="card-header bg-white border-0 pb-0 mb-0">
-						<h5 class="text-center">Log in Here</h3>
+						<h5 class="text-center">Log In Here</h3>
 							<hr>
 					</div>
 				  <div class="card-body m-0 pt-0">
-				    <form  method="post" action="{{ url_for('index') }}">
+				    <form  method="post" action="{{ url_for('login_with_password') }}">
 				    	{{ form.csrf_token }}
 					  	<div class="form-group">
 					  		{{ render_field(form.username, placeholder="Username", class="form-control mb-2 border border-primary text-center", required="true") }}
-					  		{{ render_field(form.rfid, placeholder="Please tap your ID", class="form-control text-center border-primary mb-2 mt-0", required="true") }}
+					  		{{ render_field(form.password, placeholder="Password", class="form-control mb-2 border border-primary text-center", required="true") }}
 					  		<!-- <input placeholder="Username" type="text" class="form-control mb-2 border border-primary">
-					    	<input type="password" class="form-control text-center border-primary mb-2 mt-0" id="rfid" placeholder="Please tap your ID"> -->
+					  		<input placeholder="Password" type="password" class="form-control mb-2 border border-primary"> -->
 					  	</div>
-					  	<input type="submit" name="login" hidden="true">
-				    	<!-- <a href="/home" class="btn btn-primary rounded-pill">Log In</a> -->
+					  	<!-- <input type="submit" name="login" hidden="true"> -->
+				    	<!-- <a href="/home" class="btn btn-primary rounded-pill" style="margin-left: 3	0%; width: 40%;">Log In</a> -->
+				    	<button type="submit" class="btn btn-primary rounded-pill" style="margin-left: 30%; width: 40%;">Log In</button>
 					</form>
-				  	<small class="col-4"><a href="/login">Lost your ID?</a></small>
-				  	<hr>
+				  	<small class="col-4"><a href="#">Forget Password?</a></small>
+				  <hr>
 				<div class="container mt-2 text-center">
 					<small>Haven't sign up yet? <a href="/signup">Get Started</a></small>
 				</div>

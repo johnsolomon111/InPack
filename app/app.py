@@ -45,7 +45,9 @@ def login_with_password():
 @server.route('/signup', methods=["GET", "POST"])
 def signup():
 	form = RegistrationForm()
-	if form.validate_on_submit():
+	if current_user.is_authenticated is True:
+		return redirect(url_for('dashboard'))
+	elif form.validate_on_submit():
 		new_user = User(form.contact.data, form.firstname.data, form.lastname.data, form.email.data, form.username.data, form.password.data, form.rfid.data)
 		dbase.session.add(new_user)
 		dbase.session.commit()
@@ -53,12 +55,15 @@ def signup():
 		user = User.query.filter_by(username=form.username.data).first()
 		login_user(user)
 		return redirect(url_for('dashboard'))
+	else:
+		return render_template('signup.html', title="Get Started!", form=form)
 	return render_template('signup.html', title="Get Started!", form=form)
 
 @server.route('/dashboard', methods=["GET", "POST"])
 @login_required
 def dashboard():
-	return render_template('dashboard.html', title="Dashboard")
+	user = current_user
+	return render_template('dashboard.html', title="Dashboard", user=user)
 
 @server.route('/logout')
 def logout():

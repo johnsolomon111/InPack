@@ -7,7 +7,7 @@ server = Flask(__name__)
 dbase = SQLAlchemy(server)
 
 server.config['SECRET_KEY'] = 'secretsecretsecret'
-server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost:5432/inpack'
+server.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost:5432/inpack2'
 server.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 login_manager = LoginManager()

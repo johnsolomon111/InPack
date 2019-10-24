@@ -7,31 +7,36 @@
 {% block content %}
 	<div class="row">
 		<div class="col-3"></div>
-		<div class="col-3 position-fixed">
+		<div class="col-3 position-fixed shadow px-0">
+			<h1 class="bg-secondary text-center py-1 text-white">InPack</h1>
 			<div class="container">
 				<div class="card mt-4 ml-2 bg-transparent border-0" style="width: 100%;">
-		  			<img src="../static/img/profile.jpg" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4">
+		  			<!-- <img src="../static/img/profile.jpg" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4"> -->
 		  			<div class="card-body">
-		    			<h5 class="card-title text-center">Zelah Mari-Chan</h5>
-		    			<hr>
-		    			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-		    			tempor incididunt</p>
+		    				<h3 class="card-title text-center"><strong>{{ user.firstname }} {{ user.lastname}}</strong></h3>
+		    			<h6 class="text-center"><strong>Username: </strong>@{{ user.username }}</h6>
+		    			<h6 class="text-center"><strong>Contact: </strong>{{ user.contact }}</h6>
+		    			<h6 class="text-center"><strong>Email: </strong>{{ user.email }}</h6>
 		    			<!-- <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
+		    			<hr>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed</a>
 		    			<hr>
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Edit Profile</a>
 		    			<a href="/logout" class="btn rounded-pill btn-danger btn-block">Log out</a>
 		 			</div>
 				</div>
 			</div>
+			<br><br><br><br><br><br><br><br>
 		</div>
 
 
 
 		<!-- TABLE AND CARDS SECTION -->
 		<div class="col-9">
-			{% include '_navbar.html' %}
 			<div class="container mt-3">
 			<div class="card-deck">
 			  <div class="card shadow" style="height: 10%;">
@@ -87,6 +92,15 @@
 			    <img src="../static/img/logo.jpg" class="card-img-top p-1" alt="...">
 			    <div class="card-body">
 			      <h5 class="card-title">Item 5</h5>
+			    </div>
+			    <div class="card-footer">
+			      <small class="text-muted">Last updated 3 mins ago</small>
+			    </div>
+			  </div>
+			  <div class="card shadow">
+			    <img src="../static/img/logo.jpg" class="card-img-top p-1" alt="...">
+			    <div class="card-body">
+			      <h5 class="card-title">Item 3</h5>
 			    </div>
 			    <div class="card-footer">
 			      <small class="text-muted">Last updated 3 mins ago</small>

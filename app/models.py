@@ -20,3 +20,17 @@ class User(UserMixin, dbase.Model):
 		self.username = username
 		self.password = generate_password_hash(password, method='sha256')
 		self.rfid = generate_password_hash(rfid, method='sha256')
+
+
+class Item(dbase.Model):
+	__tablename__ = 'item'
+	item_id = dbase.Column(dbase.Integer, primary_key=True)
+	item_name = dbase.Column(dbase.String(50), nullable=False)
+	item_category = dbase.Column(dbase.String(30), nullable=False)
+	quantity = dbase.Column(dbase.Integer)
+	status = dbase.Column(dbase.Boolean)
+	user_id = dbase.Column(dbase.Integer)
+# ITEM NAME 
+# CATEGORY
+# QUANTITY
+# STATUS

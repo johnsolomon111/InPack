@@ -1,5 +1,5 @@
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from flask_wtf import FlaskForm, Form
+from wtforms import StringField, PasswordField, SelectField, SubmitField
 from wtforms.validators import DataRequired, EqualTo, Length
 
 class RegistrationForm(FlaskForm):
@@ -16,3 +16,15 @@ class LoginForm(FlaskForm):
 	username = StringField('username')
 	password = PasswordField('password')
 	rfid = PasswordField('rfid')
+
+class ItemForm(FlaskForm):
+    categories = [('Sports', 'Sports'),
+                   ('Literary', 'Literary'),
+                   ('Cultural', 'Cultural')]
+    item_name = StringField('Item')
+    statuses = [('Available', 'Available'),
+            ('Not Available', 'Not Available')]
+    quantity = StringField('Quantity')
+    category = SelectField('Category', choices = categories)
+    status = SelectField('Status', choices = statuses)
+    submit = SubmitField('Update')

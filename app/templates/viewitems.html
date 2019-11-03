@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-3 position-fixed">
+			<div class="container">
+				<div class="card mt-4 ml-2 bg-transparent border-0" style="width: 100%;">
+		  			<img src="../static/img/profile.jpg" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4">
+		  			<div class="card-body">
+		    			<h5 class="card-title text-center">Zelah Mari-Chan</h5>
+		    			<hr>
+		    			<p>VIEW ITEMS PAGE</p>
+		    			<!-- <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
+		    			<hr>
+                        <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Edit Profile</a>
+                        <a href="{{ url_for('dashboard') }}" class="btn rounded-pill btn-outline-dark btn-block">Dashboard</a>
+		    			<a href="" class="btn rounded-pill btn-danger btn-block">Log out</a>
+		 			</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- TABLE AND CARDS SECTION -->
+		<div class="col-9">
+			{% include '_navbar.html' %}
+
+			<div class="container mt-3">
+			<div class="card-deck">
+				
+					{% for i in items %}
+			  <div class="card shadow" style="height: 2%;">
+			    <img src="../static/img/logo.jpg" class="card-img-top p-1">
+			    <div class="card-body">
+			      <center><h5 class="card-title">{{i['item_name']}}</h5></center>
+			    </div>
+			    <div class="card-footer">
+				  <center><small class="text-muted">{{i['category']}}</small></center>
+				  <center><small class="text-muted">{{i['status']}}</small></center>
+				  <center><small class="text-muted">qnty: {{i['quantity']}}</small></center>
+                  <center><a class="btn rounded-pill btn-outline-dark btn-block" width="auto" href="{{ url_for('updateitem', item_id=i.item_id) }}">Edit Item</a></center>
+                  <br>
+                  <form action="{{ url_for('deleteitem', item_id=i.item_id) }}" method="POST">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                  </form>
+			    </div>
+			  </div>
+			<br>  
+<!--
+{% for i in items %}
+<p>{{i.item_name}}</p>
+<form method="POST">
+  <input type="text" value="{{i.item_name}}" name="item_name">
+  <input type="text" value="{{i.status}}" name="status">
+  <input type="text" value="{{i.category}}" name="category">
+  <input type="text" value="{{i.quantity}}" name="quantity">
+  <input type="submit" value="Update">
+</form>
+{% endfor %}
+-->
+			  {% endfor %}
+			
+            </div>
+            </div>
+        </div>
+	</div>
+			<br>
+
+			<!-- <hr>			
+				<table class="table table-light border-0 shadow">
+				  <thead>
+				    <tr>
+				      <th scope="col">#</th>
+				      <th scope="col">First</th>
+				      <th scope="col">Last</th>
+				      <th scope="col">Handle</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <th scope="row">1</th>
+				      <td>Mark</td>
+				      <td>Otto</td>
+				      <td>@mdo</td>
+				    </tr>
+				    <tr>
+				      <th scope="row">2</th>
+				      <td>Jacob</td>
+				      <td>Thornton</td>
+				      <td>@fat</td>
+				    </tr>
+				    <tr>
+				      <th scope="row">3</th>
+				      <td>Larry</td>
+				      <td>the Bird</td>
+				      <td>@twitter</td>
+				    </tr>
+				  </tbody>
+				</table> -->
+			</div>	
+		</div>
+	</div>
+{% endblock %}

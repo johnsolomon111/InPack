@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-3 position-fixed">
+			<div class="container">
+				<div class="card mt-4 ml-2 bg-transparent border-0" style="width: 100%;">
+		  			<img src="../static/img/profile.jpg" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4">
+		  			<div class="card-body">
+		    			<h5 class="card-title text-center">Zelah Mari-Chan</h5>
+		    			<hr>
+		    			<p>VIEW ITEMS PAGE</p>
+		    			<!-- <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
+		    			<hr>
+                        <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Edit Profile</a>
+                        <a href="{{ url_for('dashboard') }}" class="btn rounded-pill btn-outline-dark btn-block">Dashboard</a>
+		    			<a href="" class="btn rounded-pill btn-danger btn-block">Log out</a>
+		 			</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- TABLE AND CARDS SECTION -->
+		<div class="col-9">
+			{% include '_navbar.html' %}
+
+			<div class="container mt-3">
+			<div class="card-deck">
+               
+               
+            
+			
+				
+			  <div class="card shadow" style="height: 10%;">
+			    
+			    <div class="card-body">
+			      <center><h5 class="card-title">Literary</h5></center>
+                </div> 
+                
+			    <div class="card-footer">
+                        <div class="card-body">
+                            
+                            
+                            {% for i in items %}
+                            {% if i.category == 'Literary' %}
+                                <center><a  href="{{ url_for('viewitem', item_id=i.item_id, item_name=i['item_name']) }}" class="card-title">{{i.item_name}}</a></center>
+                                <center><small>quantity: {{i.quantity}}</small></center>
+                                <center><small>{{i.status}}</small></center>
+                                <br>
+                            {% endif %}
+                            {% endfor %}
+                            
+                            </div>
+				  
+			    </div>
+			  </div>
+            <br>  
+        
+            <div class="card shadow" style="height: 10%;">
+			    
+                    <div class="card-body">
+                      <center><h5 class="card-title">Sports</h5></center>
+                    </div> 
+                    
+                    <div class="card-footer">
+                            <div class="card-body">
+    
+                                {% for i in items %}
+                                {% if i.category == 'Sports' %}
+                                <center><a  href="{{ url_for('viewitem', item_id=i.item_id, item_name=i['item_name']) }}" class="card-title">{{i.item_name}}</a></center>
+                                <center><small>quantity: {{i.quantity}}</small></center>
+                                <center><small>{{i.status}}</small></center>
+                                <br>
+                                {% endif %}
+                                {% endfor %}
+                                </div>
+                      
+                    </div>
+                  </div>
+                <br>  
+
+			
+			
+			</div>
+			<br>
+			</div>	
+		</div>
+	</div>
+
+{% endblock %}

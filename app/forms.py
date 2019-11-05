@@ -27,4 +27,4 @@ class ItemForm(FlaskForm):
     quantity = StringField('Quantity')
     category = SelectField('Category', choices = categories)
     status = SelectField('Status', choices = statuses)
-    submit = SubmitField('Update')
+    submit = SubmitField('Submit')

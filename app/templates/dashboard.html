@@ -6,7 +6,7 @@
 
 {% block content %}
 	<div class="row">
-		<div class="col-3"></div>
+		<div class="col-3" style="background-color:lightgrey"></div>
 		<div class="col-3 position-fixed">
 			<div class="container">
 				<div class="card mt-4 ml-2 bg-transparent border-0" style="width: 100%;">
@@ -23,6 +23,7 @@
 						<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Edit Profile</a>
 						<a href="{{ url_for('dashboard') }}" class="btn rounded-pill btn-outline-dark btn-block">Dashboard</a>
 						<a href="#" class="btn rounded-pill btn-danger btn-block">Log out</a>
+						
 						
 		 			</div>
 				</div>
@@ -157,7 +158,7 @@
 
 			<div id="id01" class="modal">
 				
-			  
+					<!----
 			  <form class="modal-content animate"  method="post">
 				
 			
@@ -181,7 +182,67 @@
 				  <button type="button" width="auto" onclick="document.getElementById('id01').style.display='none'" class="btn rounded-pill btn-danger btn-block">Cancel</button>
 				</div>
 			  </form>
-		
+			-->
+			<form class="modal-content animate" method="POST">
+				
+				<fieldset class="form-group">
+					<div class="form-group">
+						{{ form.item_name.label(class="modal-content animate") }}
+						{% if form.item_name.errors %}
+							{{ form.item_name(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.item_name.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.item_name(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+					<div class="form-group">
+						{{ form.status.label(class="form-control-label") }}
+						{% if form.status.errors %}
+							{{ form.status(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.status.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.status(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+					<div class="form-group">
+						{{ form.category.label(class="form-control-label") }}
+						{% if form.category.errors %}
+							{{ form.category(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.category.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.category(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+					<div class="form-group">
+						{{ form.quantity.label(class="form-control-label") }}
+						{% if form.quantity.errors %}
+							{{ form.quantity(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.quantity.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.quantity(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+				</fieldset>
+				<div class="form-group">
+					{{ form.submit(class="btn btn-outline-info") }}
+				</div>
+			</form>
 			
 			</div>
 

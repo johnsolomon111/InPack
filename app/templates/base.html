@@ -8,6 +8,32 @@
 	<link rel="stylesheet" type="text/css" href="../static/css/theme.css">
 </head>
 <body>
+		<div class="row">
+				<div class="col-3" style="background-color:lightgrey"></div>
+				<div class="col-3 position-fixed">
+					<div class="container">
+						<div class="card mt-4 ml-2 bg-transparent border-0" style="width: 100%;">
+							  <img src="../static/img/profile.jpg" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4">
+							  <div class="card-body">
+								<h5 class="card-title text-center">Zelah Mari-Chan</h5>
+								<hr>
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt</p>
+								<!-- <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
+								<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
+								<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
+								<hr>
+								<a href="{{ url_for('dashboard') }}" class="btn rounded-pill btn-outline-dark btn-block">Dashboard</a>
+								<a href="{{ url_for('items') }}" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
+								<a href="{{ url_for('borrowitems') }}" class="btn rounded-pill btn-outline-dark btn-block">Borrow Items</a>
+								<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a>
+								<a href="#" class="btn rounded-pill btn-danger btn-block">Log out</a>
+								
+								
+							 </div>
+						</div>
+					</div>
+				</div>
 	{% block content %}{% endblock %}
 
 </body>

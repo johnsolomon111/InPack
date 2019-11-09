@@ -5,32 +5,14 @@
 {% endblock %}
 
 {% block content %}
-	<div class="row">
-		<div class="col-3"></div>
-		<div class="col-3 position-fixed">
-			<div class="container">
-				<div class="card mt-4 ml-2 bg-transparent border-0" style="width: 100%;">
-		  			<img src="../static/img/profile.jpg" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4">
-		  			<div class="card-body">
-		    			<h5 class="card-title text-center">Zelah Mari-Chan</h5>
-		    			<hr>
-		    			<p>VIEW ITEMS PAGE</p>
-		    			<!-- <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
-		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
-		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
-		    			<hr>
-                        <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Edit Profile</a>
-                        <a href="{{ url_for('dashboard') }}" class="btn rounded-pill btn-outline-dark btn-block">Dashboard</a>
-		    			<a href="" class="btn rounded-pill btn-danger btn-block">Log out</a>
-		 			</div>
-				</div>
-			</div>
-		</div>
 
 
 		<!-- TABLE AND CARDS SECTION -->
 		<div class="col-9">
-			{% include '_navbar.html' %}
+
+				<br>
+				<h2> {{title}} </h2>
+			{% include 'modalcss.html' %}
 
 			<div class="container mt-3">
 			<div class="card-deck">

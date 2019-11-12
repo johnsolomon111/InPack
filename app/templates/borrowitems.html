@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{ title }}
+{{ title }}	
 {% endblock %}
 
 {% block content %}
@@ -99,19 +99,7 @@
 							{{ form.borrow_status(class="form-control form-control-lg") }}
 						{% endif %}
 					</div> 
-					<div class="form-group">
-						{{ form.item_id.label(class="form-control-label") }}
-						{% if form.item_id.errors %}
-							{{ form.item_id(class="form-control form-control-lg is-invalid") }}
-							<div class="invalid-feedback">
-								{% for error in form.item_id.errors %}
-									<span>{{ error }}</span>
-								{% endfor %}
-							</div>
-						{% else %}
-							{{ form.item_id(class="form-control form-control-lg") }}
-						{% endif %}
-					</div> 
+					
 				</fieldset>
 				<div class="form-group">
 					{{ form.submit(class="btn btn-outline-info") }}
@@ -126,21 +114,23 @@
 			<div class="card-deck">
 				
 					{% for i in borrow %}
+					{% for j in items %}
 			  <div class="card shadow" style="height: 10%;">
 			    <img src="../static/img/logo.jpg" class="card-img-top p-1">
 			    <div class="card-body">
-			      <center><h5 class="card-title">{{i['borrow_fname']}}</h5></center>
+			      <center><h5 class="card-title">{{j['item_name']}}</h5></center>
 			    </div>
 			    <div class="card-footer">
-				  <center><small class="text-muted">{{i['borrow_lname']}}</small></center>
-				  <center><small class="text-muted">{{i['borrow_idno']}}</small></center>
-				  <center><small class="text-muted">qnty: {{i['borrow_college']}}</small></center>
-				 
+				 <center><small class="text-muted">first name: {{i['borrow_fname']}}</small></center>
+				  <center><small class="text-muted">last name: {{i['borrow_lname']}}</small></center>
+				  <center><small class="text-muted">id no: {{i['borrow_idno']}}</small></center>
+				  <center><small class="text-muted">college: {{i['borrow_college']}}</small></center>
+				  <center><small class="text-muted">course: {{i['borrow_course']}}</small></center>
+				
 			    </div>
 			  </div>
 			<br>  
-
-
+			  {% endfor %}
 			  {% endfor %}
 			
 			

@@ -46,14 +46,15 @@ class BorrowItem(dbase.Model):
     borrow_idno = dbase.Column(dbase.String(50))
     borrow_college = dbase.Column(dbase.String(100))
     borrow_course = dbase.Column(dbase.String(50))
-    item_id = dbase.Column(dbase.Integer, dbase.ForeignKey('items.item_id'))
     borrow_status = dbase.column(dbase.String(50))
+    item_id = dbase.Column(dbase.Integer, dbase.ForeignKey('items.item_id'))
 
-    def __init__(self, borrow_fname='', borrow_lname='',borrow_idno='', borrow_college='', borrow_course='', item_id='', borrow_status=''):
+    def __init__(self, borrow_fname='', borrow_lname='',borrow_idno='', borrow_college='', borrow_course='', borrow_status='', item_id=''):
         self.borrow_fname = borrow_fname
         self.borrow_lname = borrow_lname
         self.borrow_idno = borrow_idno
         self.borrow_college = borrow_college
         self.borrow_course = borrow_course
-        self.item_id = item_id
         self.borrow_status = borrow_status
+        self.item_id = item_id
+

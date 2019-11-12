@@ -51,6 +51,7 @@ def items():
         items = Item.query.all()
         return render_template('items.html', items=items, form=form)
     return render_template('items.html', items=items, form=form, title='Items')
+    
 	
 @server.route('/item/<int:item_id>', methods=['GET', 'POST'])
 def viewitem(item_id):
@@ -105,9 +106,10 @@ def categories():
     items =  Item.query.all()
     return render_template('categories.html', items=items, title='Dashboard')
 
-@server.route('/borrow_items', methods=["GET", "POST"])
-def borrowitems():
-    borrow =  BorrowItem.query.all()
+@server.route('/item/<int:item_id>/borrow', methods=["GET", "POST"])
+def borrowitems(item_id):
+    borrow = BorrowItem.query.all()
+    items = Item.query.all()
     form = BorrowForm()
     if request.method == 'POST':
         borrow_fname  = request.form['borrow_fname']
@@ -116,11 +118,10 @@ def borrowitems():
         borrow_college = request.form['borrow_college']
         borrow_course = request.form['borrow_course']
         borrow_status = request.form['borrow_status']
-        item_id = request.form['item_id']
         borrowitem = BorrowItem(borrow_fname=borrow_fname, borrow_lname=borrow_lname, borrow_idno=borrow_idno,borrow_college=borrow_college, borrow_course=borrow_course, borrow_status=borrow_status, item_id=item_id)
       
         dbase.session.add(borrowitem)
         dbase.session.commit()
         borrow = BorrowItem.query.all()
-        return render_template('borrowitems.html', borrow=borrow, form=form)
-    return render_template('borrowitems.html', borrow=borrow, form=form, title="Borrow Item")
+        return render_template('borrowitems.html', borrow=borrow, items=items, form=form)
+    return render_template('borrowitems.html', borrow=borrow, form=form,items=items, title="Borrow Item")

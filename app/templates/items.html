@@ -16,9 +16,10 @@
 			<a onclick="document.getElementById('id01').style.display='block'" size="auto" class="btn btn-outline-dark">Add Item</a>
 
 			<div id="id01" class="modal">
-				
+					<div class="container mt-3">
+						
 			<form class="modal-content animate" method="POST">
-				
+					
 				<fieldset class="form-group">
 					<div class="form-group">
 						{{ form.item_name.label(class="form-control-label") }}
@@ -77,8 +78,11 @@
 					{{ form.submit(class="btn btn-outline-info") }}
 				</div>
 			</form>
+			</div>
 			
 			</div>
+			
+			
 			
 		<!--add item end-->	
 		<div class="container mt-3">

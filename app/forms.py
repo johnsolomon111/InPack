@@ -35,8 +35,8 @@ class BorrowForm(FlaskForm):
 	borrow_idno = StringField('Student ID No.')
 	borrow_colleges = [('CCS', 'CCS'), ('CBAA', 'CBAA'), ('CASS', 'CASS'), ('CSM', 'CSM'), ('COET', 'COET'), ('CON', 'CON'), ('CED', 'CED')]
 	borrow_course = StringField('Course')
-	borrow_statuses = [('Borrowed', 'Borrowed')]
-	borrow_college=  SelectField('Colleges', choices = borrow_colleges)
+	borrow_statuses = [('Borrowed', 'Borrowed'), ('Returned', 'Returned')]
+	borrow_college =  SelectField('Colleges', choices = borrow_colleges)
 	borrow_status =  SelectField('Status', choices = borrow_statuses)
 	item_id = StringField('Item No.')
 	submit = SubmitField('Submit')

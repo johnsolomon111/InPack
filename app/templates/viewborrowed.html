@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}	
+{% endblock %}
+
+{% block content %}
+
+		<!-- TABLE AND CARDS SECTION -->
+		<div class="col-9">
+				<br>
+				<h2> {{title}} </h2>
+			{% include 'modalcss.html' %}
+			
+
+		
+
+				
+		<!--add item end-->	
+			<div class="container mt-3">
+			<div class="card-deck">
+				
+					{% for i in borrow %}
+				
+					{% if i.borrow_status == 'Borrowed' %}
+			  <div class="card shadow" style="height: 10%;">
+			    <img src="../static/img/logo.jpg" class="card-img-top p-1">
+			    <div class="card-body">
+					
+						{% for j in i.items_id %}
+				  <center><h5 class="card-title">{{j.item_name}}</h5></center>
+				 		 {% endfor %}
+			    </div>
+			    <div class="card-footer">
+				 <center><small class="text-muted">Borrower: {{i['borrow_fname']}} {{i['borrow_lname']}}</small></center>
+				  <center><small class="text-muted">ID No: {{i['borrow_idno']}}</small></center>
+				  <center><small class="text-muted">College: {{i['borrow_college']}}</small></center>
+				  <center><small class="text-muted">Course: {{i['borrow_course']}}</small></center>
+				
+			    </div>
+			  </div>
+			<br> 
+			{% endif %}
+			
+			  {% endfor %}
+			
+			
+			</div>
+			<br>
+			</div>	
+		</div>
+	</div>
+
+{% endblock %}

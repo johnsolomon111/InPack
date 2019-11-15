@@ -12,75 +12,166 @@
 				<h2> {{title}} </h2>
 			{% include 'modalcss.html' %}
 			
-
+<!--Update Item-->
 			<div id="id01" class="modal">
 				
 			  
 				<form class="modal-content animate" method="POST">
-					{{ form.hidden_tag() }}
+					{{ form_update.hidden_tag() }}
 					<fieldset class="form-group">
 						<legend class="border-bottom mb-4">{{ legend }}</legend>
 						<div class="form-group">
-								{{ form.item_name.label(class="form-control-label") }}
-							{% if form.item_name.errors %}
-								{{ form.item_name(class="form-control form-control-lg is-invalid") }}
+								{{ form_update.item_name.label(class="form-control-label") }}
+							{% if form_update.item_name.errors %}
+								{{ form_update.item_name(class="form-control form-control-lg is-invalid") }}
 								<div class="invalid-feedback">
-									{% for error in form.item_name.errors %}
+									{% for error in form_update.item_name.errors %}
 										<span>{{ error }}</span>
 									{% endfor %}
 								</div>
 							{% else %}
-								{{ form.item_name(class="form-control form-control-lg") }}
+								{{ form_update.item_name(class="form-control form-control-lg") }}
 							{% endif %}
 						</div>
 						<div class="form-group">
-							{{ form.status.label(class="form-control-label") }}
-							{% if form.status.errors %}
-								{{ form.status(class="form-control form-control-lg is-invalid") }}
+							{{ form_update.status.label(class="form-control-label") }}
+							{% if form_update.status.errors %}
+								{{ form_update.status(class="form-control form-control-lg is-invalid") }}
 								<div class="invalid-feedback">
-									{% for error in form.status.errors %}
+									{% for error in form_update.status.errors %}
 										<span>{{ error }}</span>
 									{% endfor %}
 								</div>
 							{% else %}
-								{{ form.status(class="form-control form-control-lg") }}
+								{{ form_update.status(class="form-control form-control-lg") }}
 							{% endif %}
 						</div>
 						<div class="form-group">
-							{{ form.category.label(class="form-control-label") }}
-							{% if form.category.errors %}
-								{{ form.category(class="form-control form-control-lg is-invalid") }}
+							{{ form_update.category.label(class="form-control-label") }}
+							{% if form_update.category.errors %}
+								{{ form_update.category(class="form-control form-control-lg is-invalid") }}
 								<div class="invalid-feedback">
-									{% for error in form.category.errors %}
+									{% for error in form_update.category.errors %}
 										<span>{{ error }}</span>
 									{% endfor %}
 								</div>
 							{% else %}
-								{{ form.category(class="form-control form-control-lg") }}
+								{{ form_update.category(class="form-control form-control-lg") }}
 							{% endif %}
 						</div>
 						<div class="form-group">
-							{{ form.quantity.label(class="form-control-label") }}
-							{% if form.quantity.errors %}
-								{{ form.quantity(class="form-control form-control-lg is-invalid") }}
+							{{ form_update.quantity.label(class="form-control-label") }}
+							{% if form_update.quantity.errors %}
+								{{ form_update.quantity(class="form-control form-control-lg is-invalid") }}
 								<div class="invalid-feedback">
-									{% for error in form.quantity.errors %}
+									{% for error in form_update.quantity.errors %}
 										<span>{{ error }}</span>
 									{% endfor %}
 								</div>
 							{% else %}
-								{{ form.quantity(class="form-control form-control-lg") }}
+								{{ form_update.quantity(class="form-control form-control-lg") }}
 							{% endif %}
 						</div>
+					</fieldset>
+					<div class="form-group">
+						{{ form_update.submit(class="btn btn-outline-info") }}
+					</div>
+				</form>
+			</div>
+<!--End Update Item-->
+<!---Borrow Item-->
+			<div id="id02" class="modal">
+			 
+				<form class="modal-content animate" method="POST">
+					
+					<fieldset class="form-group">
+						<div class="form-group">
+							{{ form.borrow_fname.label(class="form-control-label") }}
+							{% if form.borrow_fname.errors %}
+								{{ form.borrow_fname(class="form-control form-control-lg is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form_borrow.borrow_fname.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.borrow_fname(class="form-control form-control-lg") }}
+							{% endif %}
+						</div> 	
+						<div class="form-group">
+							{{ form.borrow_lname.label(class="form-control-label") }}
+							{% if form.borrow_lname.errors %}
+								{{ form.borrow_lname(class="form-control form-control-lg is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form_borrow.borrow_lname.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.borrow_lname(class="form-control form-control-lg") }}
+							{% endif %}
+						</div> 	
+						<div class="form-group">
+							{{ form.borrow_idno.label(class="form-control-label") }}
+							{% if form.borrow_idno.errors %}
+								{{ form.borrow_idno(class="form-control form-control-lg is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form_borrow.borrow_idno.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.borrow_idno(class="form-control form-control-lg") }}
+							{% endif %}
+						</div> 	
+						<div class="form-group">
+							{{ form.borrow_college.label(class="form-control-label") }}
+							{% if form.borrow_college.errors %}
+								{{ form.borrow_college(class="form-control form-control-lg is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.borrow_college.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.borrow_college(class="form-control form-control-lg") }}
+							{% endif %}
+						</div> 
+						<div class="form-group">
+							{{ form.borrow_course.label(class="form-control-label") }}
+							{% if form.borrow_course.errors %}
+								{{ form.borrow_course(class="form-control form-control-lg is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.borrow_course.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.borrow_course(class="form-control form-control-lg") }}
+							{% endif %}
+						</div> 
+						<div class="form-group">
+							{{ form.borrow_status.label(class="form-control-label") }}
+							{% if form.borrow_status.errors %}
+								{{ form.borrow_status(class="form-control form-control-lg is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.borrow_status.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.borrow_status(class="form-control form-control-lg") }}
+							{% endif %}
+						</div> 
+						
 					</fieldset>
 					<div class="form-group">
 						{{ form.submit(class="btn btn-outline-info") }}
 					</div>
 				</form>
-		
-			
-			</div>
-
+				
+				</div>
+<!--End Borrow Item -->
 
 			<div class="container mt-3" >
 			<div class="card-deck" size="10%" >
@@ -95,7 +186,8 @@
 				  <center><small class="text-muted">{{i['category']}}</small></center>
 				  <center><small class="text-muted">{{i['status']}}</small></center>
 				  <center><small class="text-muted">qnty: {{i['quantity']}}</small></center>
-                  <a onclick="document.getElementById('id01').style.display='block'" size="auto" class="btn btn-outline-dark">Edit Item</a>
+				  <a onclick="document.getElementById('id01').style.display='block'" size="auto" class="btn btn-outline-dark">Edit Item</a>
+				  <a onclick="document.getElementById('id02').style.display='block'" size="auto" class="btn btn-outline-dark">Borrow Item</a>
 				  <br>
 				  <br>
                   <form action="{{ url_for('deleteitem', item_id=i.item_id) }}" method="POST">
@@ -112,37 +204,38 @@
 	</div>
 			<br>
 
-			<!-- <hr>			
-				<table class="table table-light border-0 shadow">
-				  <thead>
-				    <tr>
-				      <th scope="col">#</th>
-				      <th scope="col">First</th>
-				      <th scope="col">Last</th>
-				      <th scope="col">Handle</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-				    <tr>
-				      <th scope="row">1</th>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				    </tr>
-				    <tr>
-				      <th scope="row">2</th>
-				      <td>Jacob</td>
-				      <td>Thornton</td>
-				      <td>@fat</td>
-				    </tr>
-				    <tr>
-				      <th scope="row">3</th>
-				      <td>Larry</td>
-				      <td>the Bird</td>
-				      <td>@twitter</td>
-				    </tr>
-				  </tbody>
-				</table> -->
+			<div class="container mt-3">
+					<div class="card-deck">
+						
+							{% for i in borrow %}
+						
+							{% if i.borrow_status == 'Borrowed' %}
+					  <div class="card shadow" style="height: 10%;">
+						<img src="../static/img/logo.jpg" class="card-img-top p-1">
+						<div class="card-body">
+							
+								{% for j in i.items_id %}
+						  <center><h5 class="card-title">{{j.item_name}}</h5></center>
+								  {% endfor %}
+						</div>
+						<div class="card-footer">
+						 <center><small class="text-muted">Borrower: {{i['borrow_fname']}} {{i['borrow_lname']}}</small></center>
+						  <center><small class="text-muted">ID No: {{i['borrow_idno']}}</small></center>
+						  <center><small class="text-muted">College: {{i['borrow_college']}}</small></center>
+						  <center><small class="text-muted">Course: {{i['borrow_course']}}</small></center>
+						
+						</div>
+					  </div>
+					<br> 
+					{% endif %}
+					
+					  {% endfor %}
+					
+					
+					</div>
+					<br>
+					</div>
+			
 			</div>	
 		</div>
 	</div>

@@ -114,11 +114,12 @@
 			<div class="card-deck">
 				
 					{% for i in borrow %}
-					{% for j in items %}
+					
+					{% if i.borrow_status == 'Borrowed' %}
 			  <div class="card shadow" style="height: 10%;">
 			    <img src="../static/img/logo.jpg" class="card-img-top p-1">
 			    <div class="card-body">
-			      <center><h5 class="card-title">{{j['item_name']}}</h5></center>
+			      <center><h5 class="card-title">{{i.item_id['item_name']}}</h5></center>
 			    </div>
 			    <div class="card-footer">
 				 <center><small class="text-muted">first name: {{i['borrow_fname']}}</small></center>
@@ -129,8 +130,10 @@
 				
 			    </div>
 			  </div>
-			<br>  
-			  {% endfor %}
+			<br> 
+			{% endif %}
+			 
+			
 			  {% endfor %}
 			
 			

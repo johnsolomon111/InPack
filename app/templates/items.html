@@ -15,6 +15,8 @@
 
 			<a onclick="document.getElementById('id01').style.display='block'" size="auto" class="btn btn-outline-dark">Add Item</a>
 
+			<a href="{{ url_for('viewborroweditems') }}"size="auto" class="btn btn-outline-dark">Borrowed Item</a>
+
 			<div id="id01" class="modal">
 					<div class="container mt-3">
 						
@@ -89,26 +91,22 @@
 				<div class="card-deck">
 					
 						{% for i in items %}
-				  <div class="card shadow" style="height: 10%;">
-					<img src="../static/img/logo.jpg" class="card-img-top p-1">
-					<div class="card-body">
-					  <center><h5 class="card-title">{{i['item_name']}}</h5></center>
-					</div>
-					<div class="card-footer">
-					  <center><small class="text-muted">{{i['category']}}</small></center>
-					  <center><small class="text-muted">{{i['status']}}</small></center>
-					  <center><small class="text-muted">qnty: {{i['quantity']}}</small></center>
-					  <br>
-					  <center><a class="btn rounded-pill btn-outline-dark btn-block" width="auto" href="{{ url_for('borrowitems', item_id=i.item_id) }}">Borrow Item</a></center>
-						<br>
-					  <center><a class="btn rounded-pill btn-outline-dark btn-block" width="auto" href="{{ url_for('viewitem', item_id=i.item_id) }}">Update Item</a></center>
-					  
-					</div>
-				  </div>
-				<br>  
+			  <div class="card shadow" style="height: 10%;">
+			    <img src="../static/img/logo.jpg" class="card-img-top p-1">
+			    <div class="card-body">
+			      <center><a href="{{ url_for('viewitem', item_id=i.item_id) }}" class="card-title">{{i['item_name']}}</a></center>
+			    </div>
+			    <div class="card-footer">
+				  <center><small class="text-muted">{{i['category']}}</small></center>
+				  <center><small class="text-muted">{{i['status']}}</small></center>
+				  <center><small class="text-muted">qnty: {{i['quantity']}}</small></center>
+				  <br>
+				 
+				</div>
+			  </div>
+			<br>  
 
 			  {% endfor %}
-			
 			
 			</div>
 			<br>

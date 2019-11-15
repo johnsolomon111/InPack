@@ -22,17 +22,14 @@
 			  <div class="card shadow" style="height: 10%;">
 			    <img src="../static/img/logo.jpg" class="card-img-top p-1">
 			    <div class="card-body">
-			      <center><h5 class="card-title">{{i['item_name']}}</h5></center>
+			      <center><a href="{{ url_for('viewitem', item_id=i.item_id) }}" class="card-title">{{i['item_name']}}</a></center>
 			    </div>
 			    <div class="card-footer">
 				  <center><small class="text-muted">{{i['category']}}</small></center>
 				  <center><small class="text-muted">{{i['status']}}</small></center>
 				  <center><small class="text-muted">qnty: {{i['quantity']}}</small></center>
 				  <br>
-				  <center><a class="btn rounded-pill btn-outline-dark btn-block" width="auto" href="{{ url_for('borrowitems', item_id=i.item_id) }}">Borrow Item</a></center>
-					<br>
-				  <center><a class="btn rounded-pill btn-outline-dark btn-block" width="auto" href="{{ url_for('viewitem', item_id=i.item_id) }}">Update Item</a></center>
-				  
+				 
 				</div>
 			  </div>
 			<br>  

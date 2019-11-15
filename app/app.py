@@ -57,21 +57,37 @@ def items():
 def viewitem(item_id):
     items = Item.query.get_or_404(item_id)
     item = Item.query.filter_by(item_id=item_id).all()
-    form = ItemForm()
-    if form.validate_on_submit():
-        items.item_name = form.item_name.data
-        items.category = form.category.data
-        items.status = form.status.data
-        items.quantity = form.quantity.data
+    form_update = ItemForm()      
+    borrow = BorrowItem.query.all()
+    form = BorrowForm()
+    if form_update.validate_on_submit():
+        items.item_name = form_update.item_name.data
+        items.category = form_update.category.data
+        items.status = form_update.status.data
+        items.quantity = form_update.quantity.data
         dbase.session.commit()
         flash('Your post has been updated!', 'success')
         return redirect(url_for('viewitem', item_id=items.item_id))
     elif request.method == 'GET':
-        form.item_name.data = items.item_name
-        form.category.data = items.category
-        form.status.data = items.status
-        form.quantity.data = items.quantity
-    return render_template("viewitems.html", items=items, item=item, form=form, title='View Item')
+        form_update.item_name.data = items.item_name
+        form_update.category.data = items.category
+        form_update.status.data = items.status
+        form_update.quantity.data = items.quantity
+
+    if request.method == 'POST':
+        borrow_fname  = request.form['borrow_fname']
+        borrow_lname = request.form['borrow_lname']
+        borrow_idno = request.form['borrow_idno']
+        borrow_college = request.form['borrow_college']
+        borrow_course = request.form['borrow_course']
+        borrow_status = request.form['borrow_status']
+        borrowitem = BorrowItem(borrow_fname=borrow_fname, borrow_lname=borrow_lname, borrow_idno=borrow_idno,borrow_college=borrow_college, borrow_course=borrow_course, borrow_status=borrow_status, item_id=item_id)
+      
+        dbase.session.add(borrowitem)
+        dbase.session.commit()
+        borrow = BorrowItem.query.all()
+        return render_template('viewborrowed.html', borrow=borrow, items=items, form=form, form_update=form_update)
+    return render_template("viewitems.html", items=items, item=item, form=form, form_update=form_update, title='View Item')
 
 @server.route('/item/<int:item_id>/update', methods=['GET','POST'])
 def updateitem(item_id):
@@ -104,24 +120,10 @@ def deleteitem(item_id):
 @server.route('/categories', methods=["GET", "POST"])
 def categories():
     items =  Item.query.all()
-    return render_template('categories.html', items=items, title='Dashboard')
+    return render_template('categories.html', items=items, title='Categories')
 
-@server.route('/item/<int:item_id>/borrow', methods=["GET", "POST"])
-def borrowitems(item_id):
+@server.route('/borroweditems', methods=["GET","POST"])
+def viewborroweditems():
     borrow = BorrowItem.query.all()
-    items = Item.query.all()
-    form = BorrowForm()
-    if request.method == 'POST':
-        borrow_fname  = request.form['borrow_fname']
-        borrow_lname = request.form['borrow_lname']
-        borrow_idno = request.form['borrow_idno']
-        borrow_college = request.form['borrow_college']
-        borrow_course = request.form['borrow_course']
-        borrow_status = request.form['borrow_status']
-        borrowitem = BorrowItem(borrow_fname=borrow_fname, borrow_lname=borrow_lname, borrow_idno=borrow_idno,borrow_college=borrow_college, borrow_course=borrow_course, borrow_status=borrow_status, item_id=item_id)
-      
-        dbase.session.add(borrowitem)
-        dbase.session.commit()
-        borrow = BorrowItem.query.all()
-        return render_template('borrowitems.html', borrow=borrow, items=items, form=form)
-    return render_template('borrowitems.html', borrow=borrow, form=form,items=items, title="Borrow Item")
+    items =  Item.query.all()
+    return render_template('viewborrowed.html', items=items, borrow=borrow, title='Borrowed Items')

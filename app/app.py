@@ -89,26 +89,6 @@ def viewitem(item_id):
         return render_template('viewborrowed.html', borrow=borrow, items=items, form=form, form_update=form_update)
     return render_template("viewitems.html", items=items, item=item, form=form, form_update=form_update, title='View Item')
 
-@server.route('/item/<int:item_id>/update', methods=['GET','POST'])
-def updateitem(item_id):
-    items = Item.query.get_or_404(item_id)
-    form = ItemForm()
-    if form.validate_on_submit():
-        items.item_name = form.item_name.data
-        items.category = form.category.data
-        items.status = form.status.data
-        items.quantity = form.quantity.data
-        dbase.session.commit()
-        flash('Your post has been updated!', 'success')
-        return redirect(url_for('viewitem', item_id=items.item_id))
-    elif request.method == 'GET':
-        form.item_name.data = items.item_name
-        form.category.data = items.category
-        form.status.data = items.status
-        form.quantity.data = items.quantity
-    return render_template('updateitems.html', title='Update Item',
-                            form=form, items=items)
-
 @server.route("/item/<int:item_id>/delete", methods=['POST'])
 def deleteitem(item_id):
     items = Item.query.get_or_404(item_id)

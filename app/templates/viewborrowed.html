@@ -26,10 +26,15 @@
 			  <div class="card shadow" style="height: 10%;">
 			    <img src="../static/img/logo.jpg" class="card-img-top p-1">
 			    <div class="card-body">
-					
-						{% for j in i.items_id %}
-				  <center><h5 class="card-title">{{j.item_name}}</h5></center>
-				 		 {% endfor %}
+
+						{% if i.items_id %}
+						
+						
+				  <center><h5 class="card-title">{{i['item_name']}}</h5></center>
+
+						 {% endif %}
+						
+						  
 			    </div>
 			    <div class="card-footer">
 				 <center><small class="text-muted">Borrower: {{i['borrow_fname']}} {{i['borrow_lname']}}</small></center>

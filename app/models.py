@@ -30,6 +30,8 @@ class Item(dbase.Model):
     category = dbase.Column(dbase.String(50))
     status = dbase.Column(dbase.String(50))
     quantity = dbase.Column(dbase.Integer)
+    borrow = dbase.relationship('BorrowItem', backref='items')
+
 
     def __init__(self, item_name='', status='',category='', quantity=''):
         self.item_name = item_name
@@ -47,7 +49,7 @@ class BorrowItem(dbase.Model):
     borrow_college = dbase.Column(dbase.String(100))
     borrow_course = dbase.Column(dbase.String(50))
     borrow_status = dbase.Column(dbase.String(100))
-    item_name = dbase.Column(dbase.Integer, dbase.ForeignKey('items.item_id'))
+    item_id = dbase.Column(dbase.Integer, dbase.ForeignKey('items.item_id'))
 
     def __init__(self, borrow_fname='', borrow_lname='',borrow_idno='', borrow_college='', borrow_course='', borrow_status='', item_id=''):
         self.borrow_fname = borrow_fname

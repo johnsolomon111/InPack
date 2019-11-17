@@ -80,13 +80,13 @@ def viewitem(item_id):
         borrow_idno = request.form['borrow_idno']
         borrow_college = request.form['borrow_college']
         borrow_course = request.form['borrow_course']
-        borrow_status = request.form['borrow_status']
+        borrow_status = ['Borrowed']
         borrowitem = BorrowItem(borrow_fname=borrow_fname, borrow_lname=borrow_lname, borrow_idno=borrow_idno,borrow_college=borrow_college, borrow_course=borrow_course, borrow_status=borrow_status, item_id=item_id)
       
         dbase.session.add(borrowitem)
         dbase.session.commit()
         borrow = BorrowItem.query.all()
-        return render_template('viewborrowed.html', borrow=borrow, items=items, form=form, form_update=form_update)
+        return redirect(url_for('viewborroweditems'))
     return render_template("viewitems.html", items=items, item=item, form=form, form_update=form_update, title='View Item')
 
 @server.route("/item/<int:item_id>/delete", methods=['POST'])

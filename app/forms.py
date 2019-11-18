@@ -20,7 +20,9 @@ class LoginForm(FlaskForm):
 class ItemForm(FlaskForm):
     categories = [('Sports', 'Sports'),
                    ('Literary', 'Literary'),
-                   ('Cultural', 'Cultural')]
+                   ('Cultural', 'Cultural'),
+				   ('Special Com','Special Com'),
+				   ('Facilities Com','Facilities Com')]
     item_name = StringField('Item')
     statuses = [('Available', 'Available'),
             ('Not Available', 'Not Available')]

@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+        <div class="col-3"></div>
+        <div class="col-3 position-fixed">
+            <div class="container">
+                <div class="card mt-4 ml-2 bg-transparent border-0" style="width: 100%;">
+                    <img src="../static/img/profile.jpg" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Zelah Mari-Chan</h5>
+                        <hr>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt</p>
+                        <!-- <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
+                        <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
+                        <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
+                        <hr>
+                        <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Edit Profile</a>
+                        <a href="/logout" class="btn rounded-pill btn-danger btn-block">Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		<!-- TABLE AND CARDS SECTION -->
+		<div class="col-9">
+				<br>
+				<h2> {{title}} </h2>
+			{% include 'modalcss.html' %}
+
+			<a onclick="document.getElementById('id01').style.display='block'" size="auto" class="btn btn-outline-dark">Add Item</a>
+
+			<a href="{{ url_for('viewborroweditems') }}"size="auto" class="btn btn-outline-dark">Borrowed Item</a>
+
+			<div id="id01" class="modal">
+					<div class="container mt-3">
+						
+			<form class="modal-content animate" method="POST">
+					
+				<fieldset class="form-group">
+					<div class="form-group">
+						{{ form.item_name.label(class="form-control-label") }}
+						{% if form.item_name.errors %}
+							{{ form.item_name(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.item_name.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.item_name(class="form-control form-control-lg") }}
+						{% endif %}
+					</div> 	
+					<div class="form-group">
+						{{ form.status.label(class="form-control-label") }}
+						{% if form.status.errors %}
+							{{ form.status(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.status.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.status(class="form-control form-control-lg") }}
+						{% endif %}
+					</div> 	
+					<div class="form-group">
+						{{ form.category.label(class="form-control-label") }}
+						{% if form.category.errors %}
+							{{ form.category(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.category.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.category(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+					<div class="form-group">
+						{{ form.quantity.label(class="form-control-label") }}
+						{% if form.quantity.errors %}
+							{{ form.quantity(class="form-control form-control-lg is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.quantity.errors %}
+									<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.quantity(class="form-control form-control-lg") }}
+						{% endif %}
+					</div>
+				</fieldset>
+				<div class="form-group">
+					{{ form.submit(class="btn btn-outline-info") }}
+				</div>
+			</form>
+			</div>
+			
+			</div>
+			
+			
+			
+		<!--add item end-->	
+		<div class="container mt-3">
+				<div class="card-deck">
+					
+						{% for i in items %}
+			  <div class="card shadow" style="height: 10%;">
+			    <img src="../static/img/logo.jpg" class="card-img-top p-1">
+			    <div class="card-body">
+			      <center><a href="{{ url_for('viewitem', item_id=i.item_id) }}" class="card-title">{{i['item_name']}}</a></center>
+			    </div>
+			    <div class="card-footer">
+				  <center><small class="text-muted">{{i['category']}}</small></center>
+				  <center><small class="text-muted">{{i['status']}}</small></center>
+				  <center><small class="text-muted">qnty: {{i['quantity']}}</small></center>
+				  <br>
+				 
+				</div>
+			  </div>
+			<br>  
+
+			  {% endfor %}
+			
+			</div>
+			<br>
+			</div>	
+		</div>
+    </div>
+
+	<script>
+		// Get the modal
+		var modal = document.getElementById('id01');
+		
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+		</script>
+		
+
+{% endblock %}

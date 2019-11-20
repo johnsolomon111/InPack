@@ -24,20 +24,37 @@
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
 		    			<br>
-		    			<a href="/dashboard" class="btn rounded border-0 btn-outline-primary btn-block">List</a>
+		    			<a href="{{ url_for('dashboard', page_num=1)}}" class="btn rounded border-0 btn-outline-primary btn-block">List</a>
 		    			{% if user.user_type == 'Admin' %}
 		    			<a href="/dashboard/users" class="btn rounded btn-primary btn-block">Users</a>
 		    			{% else %}
 		    			
 		    			{% endif %}
 		    			<a href="/dashboard/profile" class="btn rounded border-0 btn-outline-primary btn-block">Profile</a>
-		    			<a href="/logout" class="btn rounded border-0 btn-outline-danger btn-block" onclick="return confirm('Are you sure to want to logout?')">Log out</a>
+		    			<button  type="button" class="btn border-0 rounded btn-outline-danger btn-block" data-toggle="modal" data-target="#myModal2">Log out</button>
 				</div>
 			</div>
 			<br><br><br><br><br><br><br><br>
 		</div>
 
-
+<!-- MODAL -->
+			<div class="modal fade" name="modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header text-center m-0 border-0">
+				        
+				      </div>
+				      <div class="modal-body text-center">
+				 <h5 class="modal-title text-danger" id="exampleModalScrollableTitle">Are you sure?</h5>
+				      </div>
+				      <div class="modal-footer border-0 pt-0">
+					      	<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancel</button>
+					      	<a href="{{ url_for('logout') }}" class="btn btn-danger">Log out</a>
+					  </div>
+				    </div>
+				  </div>
+				</div>
+		<!-- MODAL -->
 
 		<!-- TABLE AND CARDS SECTION -->
 		<div class="col-9 p-0">
@@ -101,12 +118,12 @@
 				</div>
 				<!-- MODAL -->
 				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-success mx-1" data-toggle="modal" data-target="#myModal2">
+				<button type="button" class="btn btn-success mx-1" data-toggle="modal" data-target="#myModalc">
 				  Add Category
 				</button>
 
 				<!-- Modal categories -->
-				<div class="modal fade" name="modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				<div class="modal fade" name="modal" id="myModalc" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 				  <div class="modal-dialog modal-dialog-scrollable" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header border-0 text-center">
@@ -128,14 +145,16 @@
 				</div>
 				<!-- MODAL -->
 
+				
+
 			</div>
 			<div class="container my-3">
 			<div class="card p-3 mr-5 border border-primary">
 				<table class="table table-light">
 				  <thead class="text-center">
 				    <tr>
-				      <th scope="col">Type</th>
 				      <th scope="col">Name</th>
+				      <th scope="col">Type</th>
 				      <th scope="col">Email</th>
 				      <th scope="col">Username</th>
 				      <th scope="col">Action</th>
@@ -145,14 +164,35 @@
 				    {% for datum in data %}
 				    	{% if datum.user_type != 'Admin' %}
 					        <tr>
-					          <td>{{ datum.user_type }}</td>
 					          <td>{{ datum.firstname }} {{ datum.lastname }}</td>
+					          <td>{{ datum.user_type }}</td>
 					          <td>{{ datum.email  }}</td>
 					          <td>@{{ datum.username }}</td>
 					          <td>
 					          	<div class="bth-group" role="group">
 					              <!-- <a href="/update/{{ datum.id }}" class="btn btn-warning">Edit</a>  -->
-					              <a href="{{ url_for('delete_user', id=datum.id) }}" class="btn btn-danger" onclick="return confirm('Are you sure to want to delete?')">X</i></a>
+					              <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#myModa{{ datum.id }}">X</i></a>
+					              <!-- Modal delete -->
+									<div class="modal fade" name="modal" id="myModa{{ datum.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+									  <div class="modal-dialog modal-dialog-centered" role="document">
+									    <div class="modal-content">
+									      <div class="modal-header border-0 text-center">
+									        <h5 class="modal-title text-danger" id="exampleModalScrollableTitle">Confirm Action</h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+									      </div>
+									      <div class="modal-body mb-0">
+									      	<h5>Are you sure you want to delete {{ datum.firstname }} {{ datum.lastname }}?</h5>
+									      </div>
+									      <div class="modal-footer border-0">
+									      	<button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+									      	<a href="{{ url_for('delete_user', id=datum.id) }}" class="btn btn-danger">Delete</a>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+									<!-- MODAL -->
 					            </div>
 					          </td>
 					        </tr>

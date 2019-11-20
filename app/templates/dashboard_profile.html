@@ -24,18 +24,36 @@
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
 		    			<br>
-		    			<a href="/dashboard" class="btn rounded border-0 btn-outline-primary btn-block">List</a>
+		    			<a href="{{ url_for('dashboard', page_num=1) }}" class="btn rounded border-0 btn-outline-primary btn-block">List</a>
 		    			{% if user.user_type == 'Admin' %}
 		    			<a href="/dashboard/users" class="btn border-0 rounded btn-outline-primary btn-block">Users</a>
 		    			{% else %}
 		    			
 		    			{% endif %}
 		    			<a href="/dashboard/profile" class="btn rounded btn-primary btn-block">Profile</a>
-		    			<a href="/logout" class="btn rounded border-0 btn-outline-danger btn-block" onclick="return confirm('Are you sure to want to logout?')">Log out</a>
+		    			<button  type="button" class="btn border-0 rounded btn-outline-danger btn-block" data-toggle="modal" data-target="#myModal2">Log out</button>
 				</div>
 			</div>
 			<br><br><br><br><br><br><br><br>
 		</div>
+		<!-- MODAL -->
+			<div class="modal fade" name="modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header text-center m-0 border-0">
+				        
+				      </div>
+				      <div class="modal-body text-center">
+				 <h5 class="modal-title text-danger" id="exampleModalScrollableTitle">Are you sure?</h5>
+				      </div>
+				      <div class="modal-footer border-0 pt-0">
+					      	<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancel</button>
+					      	<a href="{{ url_for('logout') }}" class="btn btn-danger">Log out</a>
+					  </div>
+				    </div>
+				  </div>
+				</div>
+		<!-- MODAL -->
 
 
 
@@ -44,19 +62,18 @@
 				<h2 class="mt-5 ml-4">Account</h2>
 			<div class="row mx-4">
 
-				<div class="jumbotron bg-transparent border border-primary py-4" style="width: 85%;">
-					<h4 class="border-bottom border-primary pb-3"><strong>{{ user.college_name }} - <span class="bg-success text-light p-2 rounded">{{ user.user_type }}</span></strong></h4>
+				<div class="jumbotron bg-transparent border border-primary py-4">
+					<h5 class="border-bottom border-primary pb-3"><strong>{{ user.college_name }} - <span class="bg-success text-light p-2 rounded">{{ user.user_type }}</span></strong></h5>
 						<br>
-						<h5>Name: <strong>{{ user.firstname }} {{ user.lastname }}</strong></h5>
-					  <h5>Email: <strong>{{ user.email }}</strong></h5>
-					  <h5>Contact Number: <strong>{{ user.contact }}</strong></h5>
-					  <h5>Username: <strong>@{{ user.username }}</strong></h5>
+						<h6>Name: <strong>{{ user.firstname }} {{ user.lastname }}</strong></h6>
+					  <h6>Email: <strong>{{ user.email }}</strong></h6>
+					  <h6>Contact Number: <strong>{{ user.contact }}</strong></h6>
+					  <h6>Username: <strong>@{{ user.username }}</strong></h6>
+				<div class="row pt-1">
 					
-				<div class="row">
-					<div class="col-9"></div>
-					<div class="col-3 mr-0">
-						<button type="button" data-toggle="modal" data-target="#myModal2" class="btn btn-warning ml-5 mr-0">Update</button>
-					</div>
+					
+						<button type="button" data-toggle="modal" data-target="#myModalu" class="btn btn-warning">Update</button>
+					
 				</div>
 				</div>
 			</div>
@@ -64,7 +81,7 @@
 			</div>
 
 				<!-- Modal categories -->
-				<div class="modal fade" name="modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				<div class="modal fade" name="modal" id="myModalu" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 				  <div class="modal-dialog modal-dialog-scrollable" role="document">
 				    <div class="modal-content">
 				      <div class="modal-header border-0 text-center">

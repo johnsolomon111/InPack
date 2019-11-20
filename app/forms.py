@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, IntegerField, FileField
 from wtforms.validators import DataRequired, EqualTo, Length
 
 class RegistrationForm(FlaskForm):
@@ -19,8 +19,16 @@ class LoginForm(FlaskForm):
 	rfid = PasswordField('rfid')
 
 class CollegeForm(FlaskForm):
-	college_pic = StringField('college_pic', validators=[DataRequired(), Length(min=1,max=200)])
+	college_pic = FileField('college_pic', validators=[DataRequired(), Length(min=1,max=200)])
 	college_name = StringField('college_name',validators=[DataRequired(), Length(min=1,max=200)])
 
 class CategoryForm(FlaskForm):
 	category_name = StringField('category_name', validators=[DataRequired(), Length(min=1,max=50)])
+
+class ItemForm(FlaskForm):
+	item_name = StringField('item_name', validators=[DataRequired(),Length(min=1,max=50)])
+	quantity = IntegerField('quantity')
+	category = StringField('category')
+
+class BorrowForm(FlaskForm):
+	quantity = IntegerField('quantity')

@@ -35,15 +35,29 @@ class Item(dbase.Model):
     status = dbase.Column(dbase.String(50))
     quantity = dbase.Column(dbase.Integer)
     item_pic = dbase.Column(dbase.String(200))
-    college_id = dbase.Column(dbase.String(200))
+    college_name = dbase.Column(dbase.String(200))
 
-    def __init__(self, item_name='', status='',category='', quantity='', item_pic='', college_name=''):
+    def __init__(self, item_name='',category='', quantity='', college_name='', status=''):
         self.item_name = item_name
         self.status = status
         self.category = category
         self.quantity = quantity
-        self.item_pic = item_pic
         self.college_name = college_name
+
+class BorrowedItem(dbase.Model):
+	__tablename__="borroweditem"
+
+	borroweditem_id = dbase.Column(dbase.Integer, primary_key=True)
+	borroweditem_name = dbase.Column(dbase.String(50))
+	item_id = dbase.Column(dbase.Integer)
+	quantity = dbase.Column(dbase.Integer)
+	college_name = dbase.Column(dbase.String())
+
+	def __init__(self, borroweditem_name='',item_id='',quantity='',college_name=''):
+		self.borroweditem_name = borroweditem_name
+		self.item_id = item_id
+		self.quantity = quantity
+		self.college_name = college_name
 
 class College(dbase.Model):
 	__tablename__ = "college"

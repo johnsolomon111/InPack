@@ -58,42 +58,74 @@
 
 		<!-- TABLE AND CARDS SECTION -->
 		<div class="col-9 p-0">
-			
-			
-	<div class="container my-3">
-		<div class="card p-3 mr-5 border border-primary">
-			<table class="table table-light">
-			  <thead class="text-center">
-				<tr>
-				  <th scope="col">Borrower</th>
-				  <th scope="col">Item</th>
-				  <th scope="col">Quantity</th>
-				  <th scope="col">College</th>
-				  <th scope="col">Course</th>
-				  <th scope="col">ID No.</th>
-				</tr>
-			  </thead>
-			  <tbody class="text-center m-0">
+			<div class="row mt-5 mx-3">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+				  Add User
+				</button>
 
-				
-				
-				{% for i in borrow %} 
-		
-						<tr>
-						  <td>{{ i.borrow_fname }} {{ i.borrow_lname }}</td>
-						 <td>{{i.items.item_name}}</td>
-						  <td>{{ i.quantity  }}</td>
-						  <td>{{ i.borrow_college }}</td>
-						  <td>{{ i.borrow_course }}</td>
-						  <td>{{ i.borrow_idno }}</td>
-						  
-						</tr>
-				
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
-	</div>
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-success mx-1" data-toggle="modal" data-target="#myModalc">
+				  Add Category
+				</button>
+
+	
+
+			</div>
+			<div class="container my-3">
+			<div class="card p-3 mr-5 border border-primary">
+				<table class="table table-light">
+				  <thead class="text-center">
+				    <tr>
+				      <th scope="col">Item</th>
+				      <th scope="col">Quantity</th>
+				      <th scope="col">Category</th>
+				      <th scope="col">Borrower</th>
+				      
+				    </tr>
+				  </thead>
+				  <tbody class="text-center m-0">
+				    {% for datum in data %}
+				    	{% if datum.user_type != 'Admin' %}
+					        <tr>
+					          <td>{{ datum.firstname }} {{ datum.lastname }}</td>
+					          <td>{{ datum.user_type }}</td>
+					          <td>{{ datum.email  }}</td>
+					          <td>@{{ datum.username }}</td>
+					          <td>
+					          	<div class="bth-group" role="group">
+					              <!-- <a href="/update/{{ datum.id }}" class="btn btn-warning">Edit</a>  -->
+					              <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#myModa{{ datum.id }}">X</i></a>
+					              <!-- Modal delete -->
+									<div class="modal fade" name="modal" id="myModa{{ datum.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+									  <div class="modal-dialog modal-dialog-centered" role="document">
+									    <div class="modal-content">
+									      <div class="modal-header border-0 text-center">
+									        <h5 class="modal-title text-danger" id="exampleModalScrollableTitle">Confirm Action</h5>
+									        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									          <span aria-hidden="true">&times;</span>
+									        </button>
+									      </div>
+									      <div class="modal-body mb-0">
+									      	<h5>Are you sure you want to delete {{ datum.firstname }} {{ datum.lastname }}?</h5>
+									      </div>
+									      <div class="modal-footer border-0">
+									      	<button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+									      	<a href="{{ url_for('delete_user', id=datum.id) }}" class="btn btn-danger">Delete</a>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+									<!-- MODAL -->
+					            </div>
+					          </td>
+					        </tr>
+				        {% endif %}
+			        {% endfor %}
+				  </tbody>
+				</table>
+			</div>
+			</div>	
 		</div>
 	</div>
 {% endblock %}

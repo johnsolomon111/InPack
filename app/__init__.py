@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, UserMixin
+from flask_login import LoginManager, UserMixin, login_required, logout_user, current_user, login_user
 
 server = Flask(__name__)
 dbase = SQLAlchemy(server)

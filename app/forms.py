@@ -1,5 +1,5 @@
-from flask_wtf import FlaskForm, Form
-from wtforms import StringField, PasswordField, SelectField, SubmitField
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, IntegerField, FileField, SelectField, SubmitField
 from wtforms.validators import DataRequired, EqualTo, Length
 
 class RegistrationForm(FlaskForm):
@@ -11,25 +11,29 @@ class RegistrationForm(FlaskForm):
 	password = PasswordField('password', validators=[DataRequired(), Length(min=6,max=50)]) #min 6 #max 50
 	confirm = PasswordField('confirm', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
 	rfid = PasswordField('rfid')
+	user_type = StringField('user_type')
 
 class LoginForm(FlaskForm):
 	username = StringField('username')
 	password = PasswordField('password')
 	rfid = PasswordField('rfid')
 
+class CollegeForm(FlaskForm):
+	college_pic = FileField('college_pic', validators=[DataRequired(), Length(min=1,max=200)])
+	college_name = StringField('college_name',validators=[DataRequired(), Length(min=1,max=200)])
+
+class CategoryForm(FlaskForm):
+	category_name = StringField('category_name', validators=[DataRequired(), Length(min=1,max=50)])
+
 class ItemForm(FlaskForm):
-    categories = [('Sports', 'Sports'),
-                   ('Literary', 'Literary'),
-                   ('Cultural', 'Cultural')]
-    item_name = StringField('Item')
-    statuses = [('Available', 'Available'),
-            ('Not Available', 'Not Available')]
-    quantity = StringField('Quantity')
-    category = SelectField('Category', choices = categories)
-    status = SelectField('Status', choices = statuses)
-    submit = SubmitField('Submit')
+	item_name = StringField('item_name', validators=[DataRequired(),Length(min=1,max=50)])
+	quantity = IntegerField('quantity')
+	category = StringField('category')
 
 class BorrowForm(FlaskForm):
+	quantity = IntegerField('quantity')
+
+class BorrowerForm(FlaskForm):
 	borrow_fname = StringField('First Name')
 	borrow_lname = StringField('Last Name')
 	borrow_idno = StringField('Student ID No.')
@@ -37,6 +41,4 @@ class BorrowForm(FlaskForm):
 	borrow_course = StringField('Course')
 	borrow_statuses = [('Borrowed', 'Borrowed'), ('Returned', 'Returned')]
 	borrow_college =  SelectField('Colleges', choices = borrow_colleges)
-	borrow_status =  SelectField('Status', choices = borrow_statuses)
-	item_id = StringField('Item No.')
 	submit = SubmitField('Submit')

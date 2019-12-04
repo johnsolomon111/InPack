@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+{% from '_formhelper.html' import render_field %}
+<div class="row">
+	<div class="col-lg-4"></div>
+
+	<div class="col-4" style="margin-top: 3%;">
+		<div class="container">
+			<div class="card shadow">
+				<div class="card-header bg-white border-0 pb-0 mb-0">
+					<h5 class="text-center">Make your College</h5>
+				<hr>
+				</div>
+				<div class="card-body">
+					<form class="form-signin" method="post" action="{{ url_for('college') }}">
+						{{ form.csrf_token }}
+						<div class="form-group">
+							<div class="custom-file">
+								{{ render_field(form.college_pic,class="custom-file-input mb-2", required="true", id="inputGroupFile04", type="file") }}
+								<label class="custom-file-label border border-primary" for="inputGroupFile04" aria-describedby="inputGroupFileAddon04">Choose File</label>
+							</div>
+						
+							{{ render_field(form.college_name, placeholder="College Name", class="form-control my-2 border border-primary", required="true") }}
+
+							<button type="submit" class="btn btn-primary rounded-pill">Get Started</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-4">
+			
+	</div>
+</div>
+{% endblock %}

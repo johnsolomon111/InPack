@@ -5,54 +5,342 @@
 {% endblock %}
 
 {% block content %}
+{% from '_formhelper.html' import render_field %}
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-3 position-fixed px-4 mx-0">
+			<div class="container">
+				<div class="card mt-3 ml-2 bg-transparent border-0"  style="width: 252px;">
+		  			<!-- <img src="../static/img/profile.png" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4"> -->
+		  			<div class="card border border-primary mb-3 p-0">
+  						<img src="../static/img/{{ college.college_pic }}" class="card-img-top p-0 m-1" style="height: 230px; width: 240px;">
+ 						<div class="card-footer border-top border-primary bg-transparent">
+ 							<h6>{{ college.college_name }}</h6>
+ 						</div>
+					</div>
+		    			<h5><strong>{{ user.firstname }} {{ user.lastname}}</strong></h5>
+		    			<h6>@{{ user.username }}</h6>
+		    			<!-- <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
+		    			<br>
 
+		    			<a href="#" class="btn rounded btn-primary btn-block">List</a>
+		    			{% if user.user_type == 'Admin' %}
+		    			<a href="/dashboard/users" class="btn rounded border-0 btn-outline-primary btn-block">Users</a>
+		    			{% else %}
 
-		<!-- TABLE AND CARDS SECTION -->
-		<div class="col-9">
-			<br>
-			<h2> {{title}} </h2>
-
-			{% include 'modalcss.html' %}
-				
-		<!--add item end-->	
-			<div class="container mt-3">
-			<div class="card-deck">
-				
-					{% for i in items %}
-			  <div class="card shadow" style="height: 10%;">
-			    <img src="../static/img/logo.jpg" class="card-img-top p-1">
-			    <div class="card-body">
-			      <center><a href="{{ url_for('viewitem', item_id=i.item_id) }}" class="card-title">{{i['item_name']}}</a></center>
-			    </div>
-			    <div class="card-footer">
-				  <center><small class="text-muted">{{i['category']}}</small></center>
-				  <center><small class="text-muted">{{i['status']}}</small></center>
-				  <center><small class="text-muted">qnty: {{i['quantity']}}</small></center>
-				  <br>
-				 
+		    			{% endif %}
+		    			<a href="/dashboard/profile" class="btn border-0 rounded btn-outline-primary btn-block">Profile</a>
+		    			<!-- <a href="/logout" class="btn border-0 rounded btn-outline-danger btn-block" onclick="return confirm('Are you sure to want to logout?')">Log out</a> -->
+		    			<button type="button" class="btn border-0 rounded btn-outline-danger btn-block" data-toggle="modal" data-target="#myModal2">Log out</button>
 				</div>
-			  </div>
-			<br>  
-
-			  {% endfor %}
-			
-			
 			</div>
-			<br>
+			<br><br><br><br><br><br><br><br>
+		</div>
+		<!-- MODAL -->
+			<div class="modal fade" name="modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header text-center m-0 border-0">
+				        
+				      </div>
+				      <div class="modal-body text-center">
+				 <h5 class="modal-title text-danger" id="exampleModalScrollableTitle">Are you sure?</h5>
+				      </div>
+				      <div class="modal-footer border-0 pt-0">
+					      	<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancel</button>
+					      	<a href="{{ url_for('logout') }}" class="btn btn-danger">Log out</a>
+					  </div>
+				    </div>
+				  </div>
+				</div>
+		<!-- MODAL -->
+		<!-- TABLE AND CARDS SECTION -->
+		<div class="col-8">	
+			<div class="row mt-3 mx-3">
+				<div class="card-deck w-75">
+					<div class="card text-white bg-success">
+						<div class="card-body">
+							<h6 class="card-title">Total Items: </h6>
+							<h4 class="card-text"><strong>{{ t_data + t_borrow }}</strong></h4>
+						</div>
+					</div>
+					<div class="card text-white bg-info">
+						<div class="card-body">
+							<h6 class="card-title">Item in Hand: </h6>
+							<h4 class="card-text"><strong>{{ t_data }}</strong></h4>
+						</div>
+					</div>
+					<div class="card text-white bg-warning">
+						<div class="card-body">
+							<h6 class="card-title">Borrowed Items: </h6>
+							<h4 class="card-text"><strong>{{ t_borrow }}</strong></h4>
+						</div>
+					</div>
+				
+			</div>
+			</div>
+			<div class="row mt-3 mx-3">
+				<div class="col p-0">
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+					  Add Item
+				</button>
+				<button type="button" class="btn btn-outline-primary mx-1" data-toggle="modal" data-target="#myModalc">
+					  Add Category
+				</button>
+				</div>
+				<div class="col"></div>
+				<div class="col p-0">
+				<form class="form-inline">
+			      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+			      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+			    </form>
+			    </div>
+			</div>
+			<!-- Modal Item-->
+			{% if x != 0 %}
+				<div class="modal fade" name="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-scrollable" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header border-0 text-center">
+				        <h5 class="modal-title text-primary" id="exampleModalScrollableTitle">Add Item</h5>
+
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				      	<form class="container" method="post" action="{{ url_for('add_item') }}">
+				      	{{ form.csrf_token }}
+				      	<div class="row">
+				      		{{ render_field(form.item_name, placeholder="Name", class="form-control mb-2 border border-primary", required="true") }}
+				      	</div>
+				      	<div class="row">
+				      		<div class="col p-0 mr-1">
+				      			{{ render_field(form.quantity, placeholder="Quantity", class="form-control mb-2 border border-primary", required="true") }}
+				      		</div>
+				      		<div class="col p-0 ml-1">
+				      			<div class="input-group mb-3 rounded border border-primary">
+									  <select class="custom-select" name="category_name" id="inputGroupSelect01">
+									  	<option selected>Choose...</option>
+									  	{% for cats in cat %}
+										    <option value="{{ cats.category_name }}">{{ cats.category_name }}</option>							 
+									    {% endfor %}
+									  </select>
+									</div>
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<button type="submit" class="btn btn-primary">Submit</button>
+				      	</div>
+				      	</form>
+				      </div>
+				  </div>
+				</div>
+				</div>
+				      {% else %}
+				      <div class="modal fade" name="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  		<div class="modal-dialog modal-dialog-scrollable" role="document">
+					      <div class="modal-content bg-danger">
+					      	<div class="modal-header border-0 text-center">
+					        	<h5 class="modal-title text-light" id="exampleModalScrollableTitle">Add Category First</h5>
+
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span class="text-light" aria-hidden="true">&times;</span>
+						        </button>
+					      	</div>
+					      	<div class="modal-body"></div>
+					      </div>
+					  </div>
+					</div>
+				      {% endif %}
+				    
+				<!-- MODAL -->
+				<!-- Modal Category -->
+				<div class="modal fade" name="modal" id="myModalc" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-scrollable" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header border-0 text-center">
+				        <h5 class="modal-title text-primary" id="exampleModalScrollableTitle">Add Category</h5>
+
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body mb-0">
+				      	<form class="form-signin" method="post" action="{{ url_for('add_category') }}">
+				      		{{ form2.csrf_token }}
+				      		{{ render_field(form2.category_name, placeholder="Category name", class="form-control mb-2 border border-primary", required="true") }}
+					      	<button type="submit" class="btn btn-primary">Submit</button>
+				      	</form>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<!-- MODAL -->
+			<div class="row mt-3 ml-3">
+
+				<table class="table table-bordered">
+				  <thead class="text-center">
+				    <tr>
+				      <th scope="col">Name</th>
+				      <th scope="col">Category</th>
+				      <th scope="col">Availability</th>
+				      <th scope="col">Quantity</th>
+				      <th scope="col">Action</th>
+				    </tr>
+				  </thead>
+				  <tbody class="text-center m-0">
+				  	{% for thread in threads.items %}
+				        <tr>
+				          <td>{{ thread.item_name }}</td>
+				          <td>{{ thread.category }}</td>
+				          <td>{{ thread.status  }}</td>
+				          <td>{{ thread.quantity }}</td>
+				          <td class="px-0">
+				          	<div class="bth-group" role="group">
+				              <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#borrow{{ thread.item_id }}">Borrow</i></a>
+				              <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#myModa{{ thread.item_id }}">x</i></a>
+				              <!-- Modal delete -->
+								<div class="modal fade" name="modal" id="myModa{{ thread.item_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+								  <div class="modal-dialog modal-dialog-centered" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header border-0 text-center">
+								        <h5 class="modal-title text-danger" id="exampleModalScrollableTitle">Confirm Action</h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body mb-0">
+								      	<h5>Are you sure you want to delete {{ thread.item_name }}?</h5>
+								      </div>
+								      <div class="modal-footer border-0">
+								      	<button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+								      	<a href="{{ url_for('delete_item', id=thread.item_id) }}" class="btn btn-danger">Delete</a>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+								<!-- MODAL -->
+								<!-- Modal borrow -->
+								<div class="modal fade" name="modal" id="borrow{{ thread.item_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+								  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header border-0 text-center">
+								        <h5 class="modal-title text-primary" id="exampleModalScrollableTitle">Borrow</h5>
+
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body">
+								      	<form class="container" method="POST" action="{{ url_for('borrow_item',id=thread.item_id) }}">
+								      	{{ form.csrf_token }}
+								      	<div class="row">
+									      	<div class="col">
+									      		<h5 class="p-1">{{ thread.item_name }}</h5>
+											  </div>
+											  <fieldset class="form-group">
+												<div class="form-group">
+													{{ form4.borrow_fname.label(class="form-control-label") }}
+													{% if form4.borrow_fname.errors %}
+														{{ form4.borrow_fname(class="form-control form-control-lg is-invalid") }}
+														<div class="invalid-feedback">
+															{% for error in form4.borrow_fname.errors %}
+																<span>{{ error }}</span>
+															{% endfor %}
+														</div>
+													{% else %}
+														{{ form4.borrow_fname(class="form-control form-control-lg") }}
+													{% endif %}
+												</div> 	
+												<div class="form-group">
+													{{ form4.borrow_lname.label(class="form-control-label") }}
+													{% if form4.borrow_lname.errors %}
+														{{ form4.borrow_lname(class="form-control form-control-lg is-invalid") }}
+														<div class="invalid-feedback">
+															{% for error in form4.borrow_lname.errors %}
+																<span>{{ error }}</span>
+															{% endfor %}
+														</div>
+													{% else %}
+														{{ form4.borrow_lname(class="form-control form-control-lg") }}
+													{% endif %}
+												</div> 	
+												<div class="form-group">
+													{{ form4.borrow_idno.label(class="form-control-label") }}
+													{% if form4.borrow_idno.errors %}
+														{{ form4.borrow_idno(class="form-control form-control-lg is-invalid") }}
+														<div class="invalid-feedback">
+															{% for error in form4.borrow_idno.errors %}
+																<span>{{ error }}</span>
+															{% endfor %}
+														</div>
+													{% else %}
+														{{ form4.borrow_idno(class="form-control form-control-lg") }}
+													{% endif %}
+												</div> 	
+												<div class="form-group">
+													{{ form4.borrow_college.label(class="form-control-label") }}
+													{% if form4.borrow_college.errors %}
+														{{ form4.borrow_college(class="form-control form-control-lg is-invalid") }}
+														<div class="invalid-feedback">
+															{% for error in form4.borrow_college.errors %}
+																<span>{{ error }}</span>
+															{% endfor %}
+														</div>
+													{% else %}
+														{{ form4.borrow_college(class="form-control form-control-lg") }}
+													{% endif %}
+												</div> 
+												<div class="form-group">
+													{{ form4.borrow_course.label(class="form-control-label") }}
+													{% if form4.borrow_course.errors %}
+														{{ form4.borrow_course(class="form-control form-control-lg is-invalid") }}
+														<div class="invalid-feedback">
+															{% for error in form4.borrow_course.errors %}
+																<span>{{ error }}</span>
+															{% endfor %}
+														</div>
+													{% else %}
+														{{ form4.borrow_course(class="form-control form-control-lg") }}
+													{% endif %}
+												</div> 
+												<div class="col">
+													{{ render_field(form.quantity, placeholder="Quantity", class="form-control mb-2 border border-primary", required="true") }}
+											</div>
+											  </fieldset>
+											  
+											  <div class="form-group">
+												{{ form4.submit(class="btn btn-outline-info") }}
+											</div>
+											</form>
+								      </div>
+								    </div>
+								  </div>
+								</div>
+								<!-- MODAL -->
+				            </div>
+				          </td>
+				        </tr>
+			        {% endfor %}
+
+				  </tbody>
+				</table>
+				<nav aria-label="Page navigation example">
+				  <ul class="pagination">
+				{% for page in threads.iter_pages() %}
+					{% if page %}
+				    	<li class="page-item"><a class="page-link" href="{{url_for('dashboard', page_num=page)}}">{{ page }}</a></li>
+				    {% endif %}
+				{% endfor %}
+				  </ul>
+				</nav>
+
 			</div>	
+			</div>
+		</div>
 		</div>
 	</div>
-	<script>
-		// Get the modal
-		var modal = document.getElementById('id01');
-		
-		// When the user clicks anywhere outside of the modal, close it
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-		}
-		</script>
-		
-
 {% endblock %}

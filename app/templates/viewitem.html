@@ -10,7 +10,7 @@
 		<div class="col-3"></div>
 		<div class="col-3 position-fixed px-4 mx-0">
 			<div class="container">
-				<div class="card mt-3 ml-2 bg-transparent border-0"  style="width: 252px;">
+				<div class="card mt-3 ml-2 bg-transparent border-0" style="width: 252px;">
 		  			<!-- <img src="../static/img/profile.png" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4"> -->
 		  			<div class="card border border-primary mb-3 p-0">
   						<img src="../static/img/{{ college.college_pic }}" class="card-img-top p-0 m-1" style="height: 230px; width: 240px;">
@@ -24,19 +24,21 @@
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
 		    			<br>
-		    			<a href="{{ url_for('dashboard', page_num=1) }}" class="btn rounded border-0 btn-outline-primary btn-block">List</a>
+		    			<a href="{{ url_for('dashboard', page_num=1)}}" class="btn rounded border-0 btn-outline-primary btn-block">List</a>
 		    			{% if user.user_type == 'Admin' %}
-		    			<a href="/dashboard/users" class="btn border-0 rounded btn-outline-primary btn-block">Users</a>
+		    			<a href="/dashboard/users" class="btn rounded btn-primary btn-block">Users</a>
 		    			{% else %}
 		    			
 		    			{% endif %}
-		    			<a href="/dashboard/profile" class="btn rounded btn-primary btn-block">Profile</a>
+						<a href="/dashboard/profile" class="btn rounded border-0 btn-outline-primary btn-block">Profile</a>
+						<a href="/categories" class="btn border-0 rounded btn-outline-primary btn-block">Categories</a>
 		    			<button  type="button" class="btn border-0 rounded btn-outline-danger btn-block" data-toggle="modal" data-target="#myModal2">Log out</button>
 				</div>
 			</div>
 			<br><br><br><br><br><br><br><br>
 		</div>
-		<!-- MODAL -->
+
+<!-- MODAL -->
 			<div class="modal fade" name="modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
 				  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
 				    <div class="modal-content">
@@ -55,53 +57,132 @@
 				</div>
 		<!-- MODAL -->
 
-
-
 		<!-- TABLE AND CARDS SECTION -->
-		<div class="col-9">
-				<h2 class="mt-5 ml-4">Account</h2>
-			<div class="row mx-4">
-
-				<div class="col-9 p-0">		
-					<div class="container my-3">
-						<div class="card p-3 mr-5 border border-primary">
-							<table class="table table-light">
-							  <thead class="text-center">
-								<tr>
-								  <th scope="col">Borrower</th>
-								  <th scope="col">Item</th>
-								  <th scope="col">Quantity</th>
-								  <th scope="col">College</th>
-								  <th scope="col">Course</th>
-								  <th scope="col">ID No.</th>
-								</tr>
-							  </thead>
-							  <tbody class="text-center m-0">
-				
-
-						
-										<tr>
-										  <td>{{ borrow_fname }} {{ borrow_lname }}</td>
-										 <td>{{ item_name}}</td>
-										  <td>{{ quantity  }}</td>
-										  <td>{{ borrow_college }}</td>
-										  <td>{{ borrow_course }}</td>
-										  <td>{{ borrow_idno }}</td>
-										  
-										</tr>
-								
-								
-							</tbody>
-						</table>
-					</div>
-					</div>
-						</div>
-			</div>
-			<div class="row">
-			</div>
-
+		<div class="col-9 p-0">
 			
+		
+	<div class="container my-3">
+		<div class="card p-3 mr-5 border border-primary">
+				
+						<center><img src="../static/img/{{ college.college_pic }}" class="card-img-top p-0 m-1" style="height: 230px; width: 240px;"></center>
+						<br><br>
+							<center><h5><strong>{{item.item_name}}</strong></h5></center>
+				<!--edit modal-->
+				<div class="col p-0">
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+						Update Item
+				  </button>
+				</div>
+				<br>
+				<br>
+				<div class="modal fade" name="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-scrollable" role="document">
+							  <div class="modal-content">
+								<div class="modal-header border-0 text-center">
+								  <h5 class="modal-title text-primary" id="exampleModalScrollableTitle">Update Item</h5>
+		  
+								  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								  </button>
+								</div>
+								<div class="modal-body">
+										<form class="modal-content animate" method="POST" action="{{ url_for('update_item', item_id=item.item_id) }}">
+					
+												<fieldset class="form-group">
+														{{ form.csrf_token }}
+													<div class="form-group">
+														{{ form.item_name.label(class="form-control-label") }}
+														{% if form.item_name.errors %}
+															{{ form.item_name(class="form-control form-control-lg is-invalid") }}
+															<div class="invalid-feedback">
+																{% for error in form.item_name.errors %}
+																	<span>{{ error }}</span>
+																{% endfor %}
+															</div>
+														{% else %}
+															{{ form.item_name(class="form-control form-control-lg") }}
+														{% endif %}
+													</div> 	
+													<div class="form-group">
+													
+															<div class="col p-0 ml-1">
+																	<strong><h6>Category</h6></strong>
+																	<div class="input-group mb-3 rounded border border-warning">
+																			<select class="custom-select" name="category_name" id="inputGroupSelect01">
+																				<option selected>Choose...</option>
+																				{% for cats in cat %}
+																				  <option value="{{ cats.category_name }}">{{ cats.category_name }}</option>							 
+																			  {% endfor %}
+																			</select>
+																		  </div>
+															  </div>
+														
+													</div> 	
+													<div class="form-group">
+														{{ form.quantity.label(class="form-control-label") }}
+														{% if form.quantity.errors %}
+															{{ form.quantity(class="form-control form-control-lg is-invalid") }}
+															<div class="invalid-feedback">
+																{% for error in form.quantity.errors %}
+																	<span>{{ error }}</span>
+																{% endfor %}
+															</div>
+														{% else %}
+															{{ form.quantity(class="form-control form-control-lg") }}
+														{% endif %}
+													</div> 	
+													<div class="form-group">
+														{{ form.status.label(class="form-control-label") }}
+														{% if form.status.errors %}
+															{{ form.status(class="form-control form-control-lg is-invalid") }}
+															<div class="invalid-feedback">
+																{% for error in form.status.errors %}
+																	<span>{{ error }}</span>
+																{% endfor %}
+															</div>
+														{% else %}
+															{{ form.status(class="form-control form-control-lg") }}
+														{% endif %}
+													</div> 
+												</fieldset>
+												<div class="form-group">
+														<button type="submit" class="btn btn-primary">Submit</button>
+												</div>
+											</form>
+								</div>
+							</div>
+							</div>
+							</div>
+							<!--end edit modal-->
+
+			<table class="table table-light">
+			  <thead class="text-center">
+				<tr>
+				  
+				  <th scope="col">Quantity</th>
+				  <th scope="col">Category</th>
+				  <th scope="col">Status</th>
+				  <th scope="col">College Owner</th>
+				 
+				</tr>
+			  </thead>
+			  <tbody class="text-center m-0">
+
+				
+				
+						<tr >
+							
+						  <td>{{ item.quantity  }}</td>
+						  <td>{{ item.category }}</td>
+						  <td>{{ item.status }}</td>
+						  <td>{{ item.college_name }}</td>
+						  
+						</tr>
+		
+			</tbody>
+		</table>
+	</div>
+	</div>
 		</div>
 	</div>
-
 {% endblock %}

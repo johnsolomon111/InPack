@@ -56,7 +56,7 @@ class BorrowedItem(dbase.Model):
 
 	def __init__(self, borroweditem_name='',item_id='',quantity='',college_name=''):
 		self.borroweditem_name = borroweditem_name
-		self.item_id = item_id
+		self.item_id = item_id 
 		self.quantity = quantity
 		self.college_name = college_name
 

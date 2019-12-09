@@ -131,15 +131,38 @@ def borrowed_items():
 	item = Item.query.all()
 	return render_template('viewborrowed.html', item = item, user=user, college=college, borrow=borrow, title='Borrowed Items | InPack')
 
-@server.route('/view/item/<int:item_id>', methods=["GET", "POST"])
+@server.route('/item/<item_id>', methods=["GET", "POST"])
 @login_required
 def view_item(item_id):
 	user = current_user
-	borrow = Borrower.query.get_or_404(item_id)
 	college = College.query.filter_by(college_name=current_user.college_name).first()
-	item = Item.query.filter_by(item_id=item_id).first()
-	return render_template('viewitem.html', item = item, user=user, college=college, borrow=borrow, title='Borrowed Items | InPack')
+	item = Item.query.get_or_404(item_id)
+	items = Item.query.filter_by(college_name=current_user.college_name)
+	form = ItemForm()
+	cat = Category.query.filter_by(college_name=current_user.college_name)
 
+
+	return render_template('viewitem.html', cat = cat, form = form, items=items, item = item, user=user, college=college, title='Items | InPack')
+
+@server.route('/update/item/<int:item_id>', methods=["GET", "POST"])
+@login_required
+def update_item(item_id):
+	user = current_user
+	college = College.query.filter_by(college_name=current_user.college_name).first()
+	item = Item.query.get_or_404(item_id)
+	items = Item.query.filter_by(college_name=current_user.college_name)
+	form = ItemForm()
+	cat = Category.query.filter_by(college_name=current_user.college_name)
+
+	if form.validate_on_submit():
+		item.item_name = form.item_name.data
+		cat.category_name = request.form['category_name']
+		item.quantity = form.quantity.data
+		item.status = form.status.data
+		dbase.session.commit()
+		flash('Your post has been updated!', 'success')
+		return redirect(url_for('view_item', item_id=item.item_id))
+	return redirect(url_for('view_item', item_id=item.item_id))
 
 @server.route('/delete/item/<int:id>', methods=["POST", "GET"])
 @login_required
@@ -176,6 +199,51 @@ def add_category():
 		dbase.session.add(new_cat)
 		dbase.session.commit()
 	return redirect(url_for('dashboard', page_num=1))
+
+@server.route('/categories', methods=["GET","POST"])
+@login_required
+def categories():
+	user = current_user
+	college = College.query.filter_by(college_name=current_user.college_name).first()
+	category = Category.query.all()
+	borrow = Borrower.query.all()
+	item = Item.query.all()
+	form = CategoryForm()
+
+	if form.validate_on_submit():
+		category.category_name = form.category_name.data
+		dbase.session.commit()
+		flash('Your post has been updated!', 'success')
+		return redirect(url_for('categories'))
+		
+	return render_template('categories.html', title = "Categories", form = form, item = item,  category = category, user = user, college = college)
+	
+
+@server.route('/categories/update/<int:category_id>', methods=["POST", "GET"])
+@login_required
+def update_category(category_id):
+	user = current_user
+	college = College.query.filter_by(college_name=current_user.college_name).first()
+	category = Category.query.get_or_404(category_id)
+	borrow = Borrower.query.all()
+	item = Item.query.all()
+	form = CategoryForm()
+
+	if form.validate_on_submit():
+		category.category_name = form.category_name.data
+		dbase.session.commit()
+		flash('Your post has been updated!', 'success')
+		return redirect(url_for('categories'))
+	return redirect(url_for('categories'))
+
+
+@server.route('/categories/delete/<int:category_id>', methods=["POST", "GET"])
+@login_required
+def delete_category(category_id):
+	del_category = Category.query.filter_by(category_id=category_id).first()
+	dbase.session.delete(del_category)
+	dbase.session.commit()
+	return redirect(url_for('categories'))
 
 @server.route('/delete/user/<int:id>', methods=["POST", "GET"])
 @login_required

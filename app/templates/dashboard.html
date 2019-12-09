@@ -31,7 +31,8 @@
 		    			{% else %}
 
 		    			{% endif %}
-		    			<a href="/dashboard/profile" class="btn border-0 rounded btn-outline-primary btn-block">Profile</a>
+						<a href="/dashboard/profile" class="btn border-0 rounded btn-outline-primary btn-block">Profile</a>
+						<a href="/categories" class="btn border-0 rounded btn-outline-primary btn-block">Categories</a>
 		    			<!-- <a href="/logout" class="btn border-0 rounded btn-outline-danger btn-block" onclick="return confirm('Are you sure to want to logout?')">Log out</a> -->
 		    			<button type="button" class="btn border-0 rounded btn-outline-danger btn-block" data-toggle="modal" data-target="#myModal2">Log out</button>
 				</div>
@@ -74,7 +75,7 @@
 					</div>
 					<div class="card text-white bg-warning">
 						<div class="card-body">
-							<h6 class="card-title">Borrowed Items: </h6>
+							<a href = "{{ url_for('borrowed_items') }}" class="card-title">Borrowed Items: </a>
 							<h4 class="card-text"><strong>{{ t_borrow }}</strong></h4>
 						</div>
 					</div>
@@ -114,13 +115,17 @@
 				      	<form class="container" method="post" action="{{ url_for('add_item') }}">
 				      	{{ form.csrf_token }}
 				      	<div class="row">
+								<div class="col p-0 mr-1">
 				      		{{ render_field(form.item_name, placeholder="Name", class="form-control mb-2 border border-primary", required="true") }}
+						  </div>
 				      	</div>
 				      	<div class="row">
 				      		<div class="col p-0 mr-1">
 				      			{{ render_field(form.quantity, placeholder="Quantity", class="form-control mb-2 border border-primary", required="true") }}
-				      		</div>
+							  </div>
+							  
 				      		<div class="col p-0 ml-1">
+									<strong><h6>Category</h6></strong>
 				      			<div class="input-group mb-3 rounded border border-primary">
 									  <select class="custom-select" name="category_name" id="inputGroupSelect01">
 									  	<option selected>Choose...</option>
@@ -194,7 +199,7 @@
 				  <tbody class="text-center m-0">
 				  	{% for thread in threads.items %}
 				        <tr>
-				          <td>{{ thread.item_name }}</td>
+				          <td><a href="{{ url_for('view_item', item_id=thread.item_id) }}">{{ thread.item_name }}</a></td>
 				          <td>{{ thread.category }}</td>
 				          <td>{{ thread.status  }}</td>
 				          <td>{{ thread.quantity }}</td>

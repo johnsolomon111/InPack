@@ -30,7 +30,8 @@
 		    			{% else %}
 		    			
 		    			{% endif %}
-		    			<a href="/dashboard/profile" class="btn rounded border-0 btn-outline-primary btn-block">Profile</a>
+						<a href="/dashboard/profile" class="btn rounded border-0 btn-outline-primary btn-block">Profile</a>
+						<a href="/categories" class="btn border-0 rounded btn-outline-primary btn-block">Categories</a>
 		    			<button  type="button" class="btn border-0 rounded btn-outline-danger btn-block" data-toggle="modal" data-target="#myModal2">Log out</button>
 				</div>
 			</div>
@@ -79,16 +80,15 @@
 				
 				{% for i in borrow %} 
 		
-						<tr>
-						  <td>{{ i.borrow_fname }} {{ i.borrow_lname }}</td>
-						 <td>{{i.items.item_name}}</td>
+						<tr >
+							<td>{{ i.borrow_fname }} {{ i.borrow_lname }}</td>
+						<td><a href="{{ url_for('view_item', item_id=i.items.item_id) }}">{{i.items.item_name}}</a></td>
 						  <td>{{ i.quantity  }}</td>
 						  <td>{{ i.borrow_college }}</td>
 						  <td>{{ i.borrow_course }}</td>
 						  <td>{{ i.borrow_idno }}</td>
 						  
 						</tr>
-				
 				{% endfor %}
 			</tbody>
 		</table>

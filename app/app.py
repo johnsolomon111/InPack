@@ -1,4 +1,5 @@
 from app import *
+from sqlalchemy import or_
 
 from flask import render_template, request, redirect, url_for, flash, request
 @login_manager.user_loader
@@ -33,7 +34,7 @@ def login_with_password():
 		if user:
 			if check_password_hash(user.password, form.password.data):
 				login_user(user)
-				return redirect(url_for('dashboard'))
+				return redirect(url_for('dashboard', page_num=1))
 			else:
 				flash('Invalid username or password')
 				return render_template('login.html', form=form, title="Log In with Password")
@@ -68,6 +69,8 @@ def dashboard(page_num):
 	total_item = Item.query.filter_by(college_name=current_user.college_name)
 	total_borrow = BorrowedItem.query.filter_by(college_name=current_user.college_name)
 	borrower = Borrower.query.all()
+	search_form = SearchForm()
+	query = search_form.search.data
 
 	t_data = 0
 	t_borrow = 0
@@ -79,7 +82,7 @@ def dashboard(page_num):
 	cat = Category.query.filter_by(college_name=current_user.college_name)
 	x = cat.count()
 	college = College.query.filter_by(college_name=current_user.college_name).first()
-	return render_template('dashboard.html', title="Dashboard | List",x=x,form3=form3,borrower=borrower,form4=form4,threads=threads,t_borrow=t_borrow,t_data=t_data,cat=cat,form=form,form2=form2, user=user, college=college)
+	return render_template('dashboard.html', title="Dashboard | List",query=query, search_form=search_form, x=x,form3=form3,borrower=borrower,form4=form4,threads=threads,t_borrow=t_borrow,t_data=t_data,cat=cat,form=form,form2=form2, user=user, college=college)
 
 @server.route('/add/item', methods=["POST"])
 @login_required
@@ -156,9 +159,8 @@ def update_item(item_id):
 
 	if form.validate_on_submit():
 		item.item_name = form.item_name.data
-		cat.category_name = request.form['category_name']
+		category_name = request.form['category_name']
 		item.quantity = form.quantity.data
-		item.status = form.status.data
 		dbase.session.commit()
 		flash('Your post has been updated!', 'success')
 		return redirect(url_for('view_item', item_id=item.item_id))
@@ -290,6 +292,17 @@ def college():
 		dbase.session.commit()
 		return redirect(url_for('dashboard', page_num=1))
 	return render_template('college.html', title='Add College | InPack', form=form)
+
+@server.route('/search', methods=['GET', 'POST'])
+def search():
+    search_form = SearchForm()
+    form = ItemForm()
+    query = search_form.search.data
+    if search_form.validate_on_submit():
+        qry = dbase.session.query(Item).filter(or_( Item.item_name.ilike(query), Item.category.ilike(query) ) )
+        items = qry.all()
+        return render_template('dashboard.html',form=form, search_form=search_form, query=query, items=items)      
+    return redirect(url_for('dashboard'))
 
 
 @server.route('/logout')

@@ -94,8 +94,15 @@
 				<div class="col"></div>
 				<div class="col p-0">
 				<form class="form-inline">
-			      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-			      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+				  <div class="container">
+						<form class="search" method="POST" action="search" placeholder="Search.." name="search">
+						  {{ search_form.hidden_tag() }}
+						  {{ search_form.search(size=20) }}
+						  <button type="submit"  class="btn btn-primary">Search</button>
+						</form>
+					  </div>
+			  
+					  <h1>{{ query }}</h1>
 			    </form>
 			    </div>
 			</div>
@@ -122,8 +129,7 @@
 				      	<div class="row">
 				      		<div class="col p-0 mr-1">
 				      			{{ render_field(form.quantity, placeholder="Quantity", class="form-control mb-2 border border-primary", required="true") }}
-							  </div>
-							  
+				      		</div>
 				      		<div class="col p-0 ml-1">
 									<strong><h6>Category</h6></strong>
 				      			<div class="input-group mb-3 rounded border border-primary">

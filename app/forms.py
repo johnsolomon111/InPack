@@ -27,12 +27,9 @@ class CategoryForm(FlaskForm):
 	submit = SubmitField('Submit')
 
 class ItemForm(FlaskForm):
-	item_name = StringField('Item Name', validators=[DataRequired(),Length(min=1,max=50)])
-	quantity = IntegerField('Quantity')
-	category = StringField('Category')
-	statuses = [('Available', 'Available'), ('Not Available', 'Not Available')]
-	status = SelectField('Status', choices = statuses)
-	submit = SubmitField('Submit')
+	item_name = StringField('item_name', validators=[DataRequired(),Length(min=1,max=50)])
+	quantity = IntegerField('quantity')
+	category = StringField('category')
 
 class BorrowForm(FlaskForm):
 	quantity = IntegerField('Quantity')
@@ -46,3 +43,6 @@ class BorrowerForm(FlaskForm):
 	borrow_statuses = [('Borrowed', 'Borrowed'), ('Returned', 'Returned')]
 	borrow_college =  SelectField('Colleges', choices = borrow_colleges)
 	submit = SubmitField('Submit')
+
+class SearchForm(FlaskForm):
+    search = StringField('search', validators=[DataRequired()])

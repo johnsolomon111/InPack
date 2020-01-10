@@ -5,94 +5,164 @@
 {% endblock %}
 
 {% block content %}
+{% from '_formhelper.html' import render_field %}
 	<div class="row">
 		<div class="col-3"></div>
-		<div class="col-3 position-fixed">
+		<div class="col-3 position-fixed px-4 mx-0">
 			<div class="container">
-				<div class="card mt-4 ml-2 bg-transparent border-0" style="width: 100%;">
-		  			<img src="../static/img/profile.jpg" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4">
-		  			<div class="card-body">
-		    			<h5 class="card-title text-center">Zelah Mari-Chan</h5>
-		    			<hr>
-		    			<p>VIEW ITEMS PAGE</p>
+				<div class="card mt-3 ml-2 bg-transparent border-0"  style="width: 252px;">
+		  			<!-- <img src="../static/img/profile.png" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4"> -->
+		  			<div class="card border border-primary mb-3 p-0">
+  						<img src="../static/img/{{ college.college_pic }}" class="card-img-top p-0 m-1" style="height: 230px; width: 240px;">
+ 						<div class="card-footer border-top border-primary bg-transparent">
+ 							<h6>{{ college.college_name }}</h6>
+ 						</div>
+					</div>
+		    			<h5><strong>{{ user.firstname }} {{ user.lastname}}</strong></h5>
+		    			<h6>@{{ user.username }}</h6>
 		    			<!-- <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
 		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
-		    			<hr>
-                        <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Edit Profile</a>
-                        <a href="{{ url_for('dashboard') }}" class="btn rounded-pill btn-outline-dark btn-block">Dashboard</a>
-		    			<a href="" class="btn rounded-pill btn-danger btn-block">Log out</a>
-		 			</div>
+		    			<br>
+
+		    			<a href="{{ url_for('dashboard', page_num=1) }}" class="btn border-0 rounded btn-outline-primary btn-block">List</a>
+		    			{% if user.user_type == 'Admin' %}
+		    			<a href="/dashboard/users" class="btn rounded border-0 btn-outline-primary btn-block">Users</a>
+		    			{% else %}
+
+		    			{% endif %}
+						<a href="/dashboard/profile" class="btn border-0 rounded btn-outline-primary btn-block">Profile</a>
+						<a href="/categories" class="btn rounded btn-primary btn-block">Categories</a>
+		    			<!-- <a href="/logout" class="btn border-0 rounded btn-outline-danger btn-block" onclick="return confirm('Are you sure to want to logout?')">Log out</a> -->
+		    			<button type="button" class="btn border-0 rounded btn-outline-danger btn-block" data-toggle="modal" data-target="#myModal2">Log out</button>
 				</div>
 			</div>
+			<br><br><br><br><br><br><br><br>
 		</div>
-
-
+		<!-- MODAL -->
+			<div class="modal fade" name="modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header text-center m-0 border-0">
+				        
+				      </div>
+				      <div class="modal-body text-center">
+				 <h5 class="modal-title text-danger" id="exampleModalScrollableTitle">Are you sure?</h5>
+				      </div>
+				      <div class="modal-footer border-0 pt-0">
+					      	<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancel</button>
+					      	<a href="{{ url_for('logout') }}" class="btn btn-danger">Log out</a>
+					  </div>
+				    </div>
+				  </div>
+				</div>
+		<!-- MODAL -->
 		<!-- TABLE AND CARDS SECTION -->
-		<div class="col-9">
-			{% include '_navbar.html' %}
-
-			<div class="container mt-3">
-			<div class="card-deck">
-               
-               
-            
+		<div class="col-8">	
 			
-				
-			  <div class="card shadow" style="height: 10%;">
-			    
-			    <div class="card-body">
-			      <center><h5 class="card-title">Literary</h5></center>
-                </div> 
-                
-			    <div class="card-footer">
-                        <div class="card-body">
+	
+			<!-- Modal Item-->
+
+				<!-- MODAL -->
+			<div class="row mt-3 ml-3">
+
+				<table class="table table-bordered">
+				  <thead class="text-center">
+          
+				    <tr>
+				      <h4>Categories</h4>
+            </tr>
+            <br><br><br>
+				  </thead>
+				  <tbody class="text-center m-0">
+				  	{% for i in category %}
+				        <tr>
+                  <td>{{ i.category_name }}</td>
+ 
+				          <td class="px-0">
+				          	<div class="bth-group" role="group">
+				              <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#update{{ i.category_id }}">Update</i></a>
+				              <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delete">Delete</i></a>
+				              <!-- Modal delete -->
+								<div class="modal fade" name="modal" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+								  <div class="modal-dialog modal-dialog-centered" role="document">
+								    <div class="modal-content">
+								      <div class="modal-header border-0 text-center">
+								        <h5 class="modal-title text-danger" id="exampleModalScrollableTitle">Confirm Action</h5>
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								          <span aria-hidden="true">&times;</span>
+								        </button>
+								      </div>
+								      <div class="modal-body mb-0">
+								      	<h5>Are you sure you want to delete?</h5>
+								      </div>
+								      <div class="modal-footer border-0">
+								      	<button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+								      	<a href="{{ url_for('delete_category', category_id=i.category_id) }}" class="btn btn-danger">Delete</a>
+								      </div>
+								    </div>
+								  </div>
+                </div>
+                <!--end delete modal-->
+                <!-- borrow modal -->
+               
+                <div class="modal fade" name="modal" id="update{{ i.category_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header border-0 text-center">
+                          <h5 class="modal-title text-primary" id="exampleModalScrollableTitle">Update</h5>
+  
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form class="container" method="POST" action="{{ url_for('update_category', category_id=i.category_id) }}">
+                        
+                          <div class="row">
+                            <div class="col">
                             
-                            
-                            {% for i in items %}
-                            {% if i.category == 'Literary' %}
-                                <center><a  href="{{ url_for('viewitem', item_id=i.item_id, item_name=i['item_name']) }}" class="card-title">{{i.item_name}}</a></center>
-                                <center><small>quantity: {{i.quantity}}</small></center>
-                                <center><small>{{i.status}}</small></center>
-                                <br>
-                            {% endif %}
-                            {% endfor %}
-                            
-                            </div>
-				  
-			    </div>
-			  </div>
-            <br>  
-        
-            <div class="card shadow" style="height: 10%;">
-			    
-                    <div class="card-body">
-                      <center><h5 class="card-title">Sports</h5></center>
-                    </div> 
-                    
-                    <div class="card-footer">
-                            <div class="card-body">
-    
-                                {% for i in items %}
-                                {% if i.category == 'Sports' %}
-                                <center><a  href="{{ url_for('viewitem', item_id=i.item_id, item_name=i['item_name']) }}" class="card-title">{{i.item_name}}</a></center>
-                                <center><small>quantity: {{i.quantity}}</small></center>
-                                <center><small>{{i.status}}</small></center>
-                                <br>
-                                {% endif %}
+                          </div>
+                          <fieldset class="form-group">
+                              {{ form.csrf_token }}
+                              
+                          <div class="form-group">
+                            {{ form.category_name.label(class="form-control-label") }}
+                            {% if form.category_name.errors %}
+                              {{ form.category_name(class="form-control form-control-lg is-invalid") }}
+                              <div class="invalid-feedback">
+                                {% for error in form.category_name.errors %}
+                                  <span>{{ error }}</span>
                                 {% endfor %}
-                                </div>
-                      
+                              </div>
+                            {% else %}
+                              {{ form.category_name(class="form-control form-control-lg") }}
+                            {% endif %}
+                          </div> 	
+                          </div>
+                          </fieldset>
+                          
+                          <div class="form-group">
+                              {{ form.submit(class="btn btn-outline-info") }}
+                            </div>
+                        </form>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                <br>  
+               
+							<!--end edit modal-->
+				            </div>
+				          </td>
+				        </tr>
+			    {% endfor %}
 
-			
-			
-			</div>
-			<br>
+				  </tbody>
+				</table>
+
 			</div>	
+			</div>
+		</div>
 		</div>
 	</div>
-
 {% endblock %}

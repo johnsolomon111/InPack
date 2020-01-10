@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+{% from '_formhelper.html' import render_field %}
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-3 position-fixed px-4 mx-0">
+			<div class="container">
+				<div class="card mt-3 ml-2 bg-transparent border-0"  style="width: 252px;">
+		  			<!-- <img src="../static/img/profile.png" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4"> -->
+		  			<div class="card border border-primary mb-3 p-0">
+  						<img src="../static/img/{{ college.college_pic }}" class="card-img-top p-0 m-1" style="height: 230px; width: 240px;">
+ 						<div class="card-footer border-top border-primary bg-light">
+ 							<h6>{{ college.college_name }}</h6>
+ 						</div>
+					</div>
+		    			<h5><strong>{{ user.firstname }} {{ user.lastname}}</strong></h5>
+		    			<h6>@{{ user.username }}</h6>
+		    			<!-- <a href="#" class="btn rounded-pill btn-outline-dark btn-block">Items</a>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Borrowed Items</a>
+		    			<a href="#" class="btn rounded-pill btn-outline-dark btn-block">Categories</a> -->
+		    			<br>
+		    			<a href="{{ url_for('dashboard', page_num=1) }}" class="btn rounded border-0 btn-outline-primary btn-block">List</a>
+		    			{% if user.user_type == 'Admin' %}
+		    			<a href="/dashboard/users" class="btn border-0 rounded btn-outline-primary btn-block">Users</a>
+		    			{% else %}
+		    			
+		    			{% endif %}
+						<a href="/dashboard/profile" class="btn rounded btn-primary btn-block">Profile</a>
+						<a href="/categories" class="btn border-0 rounded btn-outline-primary btn-block">Categories</a>
+		    			<button  type="button" class="btn border-0 rounded btn-outline-danger btn-block" data-toggle="modal" data-target="#myModal2">Log out</button>
+				</div>
+			</div>
+			<br><br><br><br><br><br><br><br>
+		</div>
+		<!-- MODAL -->
+			<div class="modal fade" name="modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header text-center m-0 border-0">
+				        
+				      </div>
+				      <div class="modal-body text-center">
+				 <h5 class="modal-title text-danger" id="exampleModalScrollableTitle">Are you sure?</h5>
+				      </div>
+				      <div class="modal-footer border-0 pt-0">
+					      	<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancel</button>
+					      	<a href="{{ url_for('logout') }}" class="btn btn-danger">Log out</a>
+					  </div>
+				    </div>
+				  </div>
+				</div>
+		<!-- MODAL -->
+
+
+
+		<!-- TABLE AND CARDS SECTION -->
+		<div class="col-9">
+				<h2 class="mt-5 ml-4">Account</h2>
+			<div class="row mx-4">
+
+				<div class="jumbotron bg-transparent border border-primary py-4">
+					<h5 class="border-bottom border-primary pb-3"><strong>{{ user.college_name }} - <span class="bg-success text-light p-2 rounded">{{ user.user_type }}</span></strong></h5>
+						<br>
+						<h6>Name: <strong>{{ user.firstname }} {{ user.lastname }}</strong></h6>
+					  <h6>Email: <strong>{{ user.email }}</strong></h6>
+					  <h6>Contact Number: <strong>{{ user.contact }}</strong></h6>
+					  <h6>Username: <strong>@{{ user.username }}</strong></h6>
+				<div class="row pt-1">
+					
+					
+						<button type="button" data-toggle="modal" data-target="#myModalu" class="btn btn-warning">Update</button>
+					
+				</div>
+				</div>
+			</div>
+			<div class="row">
+			</div>
+
+				<!-- Modal categories -->
+				<div class="modal fade" name="modal" id="myModalu" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-scrollable" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header border-0 text-center">
+				        <h5 class="modal-title text-warning" id="exampleModalScrollableTitle">Add Category</h5>
+
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body mb-0">
+				      	<form class="form-signin" method="post" action="{{ url_for('dashboard_profile') }}">
+				    	{{ form.csrf_token }}
+				  		<div class="form-group">
+				  			<div class="row">
+				  				<div class="col">
+							    	<label>Contact Info</label>
+							    	{{ render_field(form.contact, placeholder=user.contact, class="form-control mb-2 border border-warning", required="true") }}
+							    	{{ render_field(form.firstname, placeholder=user.firstname, class="form-control mb-2 border border-warning", required="true") }}
+							    	{{ render_field(form.lastname, placeholder=user.lastname, class="form-control mb-2 border border-warning", required="true") }}
+							    	{{ render_field(form.email, placeholder=user.email, class="form-control mb-2 border border-warning", required="true", type="email") }}
+						    	</div>
+
+						    	<div class="col">
+							  		<label>Log In info</label>
+							  		{{ render_field(form.username, placeholder=user.username, class="form-control mb-2 border border-warning", required="true") }}
+							  		{{ render_field(form.password, placeholder="Password", class="form-control mb-2 border border-warning", required="true") }}
+							  		{{ render_field(form.confirm, placeholder="Confirm Password", class="form-control mb-2 border border-warning", required="true") }}
+							  		<div class="input-group mb-3 rounded border border-warning">
+									  <select class="custom-select" name="category_name" id="inputGroupSelect01">
+									  	<option selected>Choose...</option>
+									  	{% for cats in cat %}
+										    <option value="{{ cats.category_name }}">{{ cats.category_name }}</option>							 
+									    {% endfor %}
+									  </select>
+									</div>
+						    	</div>
+						    	<div class="container">
+						    	{{ render_field(form.rfid, placeholder="Please tap your ID to Sign Up", class="form-control text-center border-0 mb-0 mt-0", required="true") }}
+							    	<input type="submit" name="login-info" hidden="true">
+							    </div>
+					    	</div>
+					    	
+					    	<div class="text-center">
+					    	</div>
+				    	</div>		
+						</form>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+		</div>
+	</div>
+{% endblock %}

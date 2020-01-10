@@ -13,7 +13,10 @@
 				<div class="card mt-3 ml-2 bg-transparent border-0"  style="width: 252px;">
 		  			<!-- <img src="../static/img/profile.png" class="card-img-top img-thumbnail rounded-circle border-0 w-75 ml-4"> -->
 		  			<div class="card border border-primary mb-3 p-0">
+<<<<<<< HEAD
   			
+=======
+>>>>>>> 248a0241aaa28639311c3dd373413adc69e8dcfc
   						<img src="../static/img/{{ college.college_pic }}" class="card-img-top p-0 m-1" style="height: 230px; width: 240px;">
  						<div class="card-footer border-top border-primary bg-transparent">
  							<h6>{{ college.college_name }}</h6>
@@ -94,6 +97,7 @@
 				</div>
 				<div class="col"></div>
 				<div class="col p-0">
+<<<<<<< HEAD
 					Search : <form class="container" method="POST" action="{{ url_for('search') }}" >
 							
 						{{ search_form.csrf_token }}
@@ -189,6 +193,107 @@
 				<!-- MODAL -->
 			<div class="row mt-3 ml-3">
 
+=======
+				<form class="form-inline">
+				  <div class="container">
+						<form class="search" method="POST" action="search" placeholder="Search.." name="search">
+						  {{ search_form.hidden_tag() }}
+						  {{ search_form.search(size=20) }}
+						  <button type="submit"  class="btn btn-primary">Search</button>
+						</form>
+					  </div>
+			  
+					  <h1>{{ query }}</h1>
+			    </form>
+			    </div>
+			</div>
+			<!-- Modal Item-->
+			{% if x != 0 %}
+				<div class="modal fade" name="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-scrollable" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header border-0 text-center">
+				        <h5 class="modal-title text-primary" id="exampleModalScrollableTitle">Add Item</h5>
+
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				      	<form class="container" method="post" action="{{ url_for('add_item') }}">
+				      	{{ form.csrf_token }}
+				      	<div class="row">
+								<div class="col p-0 mr-1">
+				      		{{ render_field(form.item_name, placeholder="Name", class="form-control mb-2 border border-primary", required="true") }}
+						  </div>
+				      	</div>
+				      	<div class="row">
+				      		<div class="col p-0 mr-1">
+				      			{{ render_field(form.quantity, placeholder="Quantity", class="form-control mb-2 border border-primary", required="true") }}
+				      		</div>
+				      		<div class="col p-0 ml-1">
+									<strong><h6>Category</h6></strong>
+				      			<div class="input-group mb-3 rounded border border-primary">
+									  <select class="custom-select" name="category_name" id="inputGroupSelect01">
+									  	<option selected>Choose...</option>
+									  	{% for cats in cat %}
+										    <option value="{{ cats.category_name }}">{{ cats.category_name }}</option>							 
+									    {% endfor %}
+									  </select>
+									</div>
+				      		</div>
+				      	</div>
+				      	<div class="row">
+				      		<button type="submit" class="btn btn-primary">Submit</button>
+				      	</div>
+				      	</form>
+				      </div>
+				  </div>
+				</div>
+				</div>
+				      {% else %}
+				      <div class="modal fade" name="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  		<div class="modal-dialog modal-dialog-scrollable" role="document">
+					      <div class="modal-content bg-danger">
+					      	<div class="modal-header border-0 text-center">
+					        	<h5 class="modal-title text-light" id="exampleModalScrollableTitle">Add Category First</h5>
+
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span class="text-light" aria-hidden="true">&times;</span>
+						        </button>
+					      	</div>
+					      	<div class="modal-body"></div>
+					      </div>
+					  </div>
+					</div>
+				      {% endif %}
+				    
+				<!-- MODAL -->
+				<!-- Modal Category -->
+				<div class="modal fade" name="modal" id="myModalc" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+				  <div class="modal-dialog modal-dialog-scrollable" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header border-0 text-center">
+				        <h5 class="modal-title text-primary" id="exampleModalScrollableTitle">Add Category</h5>
+
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body mb-0">
+				      	<form class="form-signin" method="post" action="{{ url_for('add_category') }}">
+				      		{{ form2.csrf_token }}
+				      		{{ render_field(form2.category_name, placeholder="Category name", class="form-control mb-2 border border-primary", required="true") }}
+					      	<button type="submit" class="btn btn-primary">Submit</button>
+				      	</form>
+				      </div>
+				    </div>
+				  </div>
+				</div>
+				<!-- MODAL -->
+			<div class="row mt-3 ml-3">
+
+>>>>>>> 248a0241aaa28639311c3dd373413adc69e8dcfc
 				<table class="table table-bordered">
 				  <thead class="text-center">
 				    <tr>
